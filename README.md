@@ -1,4 +1,4 @@
-# CBSummary
+# CB_IPO
 An API for taking new IPO data and researching Crunchbase data
 
 [![License](https://img.shields.io/badge/License-Apache_2.0-green.svg)](https://opensource.org/licenses/Apache-2.0)  
