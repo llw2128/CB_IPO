@@ -28,37 +28,61 @@ def set_page(pNo):
   else:
     url_info = url_info[:i]+pstr
     print(url_info)
+  return url_info
     
+
+
+def reset_url():
+  global url_info
+  url_info = "https://www.sec.gov/edgar/search/#/filter_forms=S-1"
+  return url_info
+
 #Helper funciton to modify dates for webscraper
 def set_search_date(d1,d2):
   dates = 'dateRange=custom&category=custom&startdt={}&enddt={}&'.format(d1,d2)
   global url_info 
   url_info= "https://www.sec.gov/edgar/search/#/{}filter_forms=S-1".format(dates)
+  return url_info
 
 
-def edgar_scrape():
+def edgar_scrape(num):
   c_names = []
+  c_dates = []
+  forms = set()
   sada = browser.get(url_info)
   source = browser.page_source
   html_s = bs(source, 'html.parser')
 
   #find name for all recent S-1 filers with the  SEC
+  i =0
   for item in html_s.findAll( attrs={'class': 'entity-name'}):
+    if i == num:
+      break
     if item.text != 'Filing entity/person':
       c_names.append(item.text)
+      i+=1
 
   #generate list of the  filing dates 
-  c_dates = []
+  
+  i2 =0
   for item in html_s.findAll( attrs={'class': 'filed'}):
+    if i2 == num:
+      break
     if item.text != 'Filed':
       c_dates.append(item.text)
 
+  i3 =0
+  for item in html_s.findAll( attrs={'class': 'filetype'}):
+    if i3 == num:
+      break
+    if item.text != 'Form & File':
+      forms.add(item.text)
   #print(c_names)
-  return (c_names,c_dates)
+  return (c_names,c_dates,forms)
 
 #argument is the number of pages to be pulled using scraper, deafult 1
-def generate_df(num_page=1):
-  ns,ds = edgar_scrape()
+def generate_df(n=100,num_page=1):
+  ns,ds,forms = edgar_scrape(n)
   d = {'names':ns, 'filing date':ds}
   
   if num_page>1:
@@ -72,6 +96,22 @@ def generate_df(num_page=1):
   df = pd.DataFrame(data=d)
   print(df)
   return  df
+
+def add_forms(list):
+  global url_info
+  i = url_info.find('_forms=')
+  pstr = ''
+
+  pstr += list[0]
+  for form in list:
+    pstr += '%252C'
+    pstr+=form
+  url_info = url_info[:i]+pstr
+
+
+  return (url_info,pstr)
+
+  
 
 def get_ipo():
 
@@ -102,6 +142,6 @@ def add_CB(dframe):
 
 #set_search_date('2018-02-20','2023-02-10')
 #print(url_info)
-generate_df(3)
+#generate_df(3)
 
 
