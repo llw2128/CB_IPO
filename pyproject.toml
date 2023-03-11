@@ -73,7 +73,7 @@ per-file-ignores= [
 
 
 [tool.isort]
-line_length = 120
+line_length = 160
 known_first_party = 'pydantic'
 multi_line_output = 3
 include_trailing_comma = true

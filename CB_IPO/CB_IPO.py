@@ -119,13 +119,13 @@ def add_forms(list):
 
 
 def get_ipo():
-
+    """
     query = {
         "query": {"query_string": {"query": "formType:\"S-1\" AND filedAt:{2020-01-01 TO 2020-12-31}"}},
         "from": "0",
         "size": "10",
         "sort": [{"filedAt": {"order": "desc"}}],
-    }
+    }"""
     # filings = q.get_filings(query)
 
 
