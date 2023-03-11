@@ -1,6 +1,10 @@
 # CB_IPO
 An API for taking new IPO data and researching Crunchbase data
 
+[![Build Status](https://github.com/llw2128/CB_IPO/workflows/Build%20Status/badge.svg?branch=main](https://github.com/llw2128/CB_IPO/actions?query=workflow%3A%22Build+Status%22)
+
+[![codecov](https://codecov.io/gh/llw2128/CB_IPO/branch/main/graph/badge.svg)](https://codecov.io/gh/llw2128/CB_IPO)
+
 [![License](https://img.shields.io/badge/License-Apache_2.0-green.svg?style=flat-square)](https://opensource.org/licenses/Apache-2.0)  
 ![](https://img.shields.io/github/issues/llw2128/CB_IPO?style=flat-square)
 
