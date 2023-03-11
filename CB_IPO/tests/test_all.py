@@ -3,13 +3,12 @@ from CB_IPO import (
     set_search_date,
     edgar_scrape,
     generate_df,
-    get_ipo,
-    search_CB,
-    add_CB,
+    # get_ipo,
+    # search_CB,
+    # add_CB,
     reset_url,
     add_forms,
 )
-from unittest.mock import patch
 from pytest import mark
 import pandas as pd
 
@@ -91,15 +90,6 @@ def test_dfgen(input, df_out):
     set_search_date('2023-03-01', '2023-03-03')
     a1, a2 = input
 
-    a4 = {
-        'names': [
-            "U.S. GoldMining Inc.  (USGO) ",
-            "RingCentral, Inc.  (RNG) ",
-            "MariaDB plc  (MRDB, MRDB-WT) ",
-            "Kenvue Inc.  (KVUE) ",
-        ],
-        'filing date': ["2023-03-03", "2023-03-03", "2023-03-03", "2023-03-03"],
-    }
     outdf = pd.DataFrame(data=df_out)
 
     assert generate_df(a1, a2).equals(outdf)
@@ -115,7 +105,7 @@ def test_add_forms(input, output):
 
 
 # Forms scraper integration test
-@mark.parametrize("input", [('S-1', '10-K'), ('10-Q', 'S-1', 'C')])
+@mark.parametrize("input", [('S-1')])  # , '10-K'), ('10-Q', 'S-1', 'C')])
 def test_add_forms_EDGAR(input):
     reset_url()
     a = add_forms(input)

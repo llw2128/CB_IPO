@@ -61,13 +61,14 @@ ignore = [
 ]
 
 [tool.flake8]
-ignore = ['E203', 'W503','F401','E401']
+ignore = ['E203', 'W503']
 max-line-length=120
 exclude=[
     'CB_IPO/tests/*'
 ]
 per-file-ignores= [
-    'CB_IPO/__init__.py:F401, F403'
+    'CB_IPO/__init__.py:F401, F403',
+    'CB_IPO/__main__.py:F401, F403'
 ]
 
 
