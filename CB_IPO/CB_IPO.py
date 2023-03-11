@@ -50,7 +50,7 @@ def set_search_date(d1, d2):
 def edgar_scrape(num):
     c_names = []
     c_dates = []
-    form_type = set()
+    form = set()
     browser.get(url_info)
     source = browser.page_source
     html_s = bs(source, 'html.parser')
@@ -80,10 +80,10 @@ def edgar_scrape(num):
             break
         if item.text != 'Form & File':
             i = item.text.find(' ')
-            form_type.add(item.text[:i])
+            form.add(item.text[:i])
             i3 += 1
     # print(c_names)
-    return (c_names, c_dates, form_type)
+    return (c_names, c_dates, form)
 
 
 # argument is the number of pages to be pulled using scraper, deafult 1

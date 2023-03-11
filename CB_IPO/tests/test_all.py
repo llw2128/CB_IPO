@@ -63,7 +63,7 @@ def test_page_date(in_d1, in_d2, output):
 )
 def test_scraper(input, output):
     reset_url()
-    set_search_date('2023-03-01', '2023-03-03')
+    set_search_date('2022-03-01', '2023-03-03')
     ns, ds, forms = edgar_scrape(input)
     assert ns == output[0]
     assert ds == output[1]
@@ -91,7 +91,7 @@ def test_dfgen(input, df_out):
     a1, a2 = input
 
     outdf = pd.DataFrame(data=df_out)
-
+    print(outdf)
     assert generate_df(a1, a2).equals(outdf)
 
 
@@ -114,5 +114,4 @@ def test_add_forms_EDGAR(input):
     # for i in forms:
     # assert i in input
     reset_url()
-    for og in input:
-        assert og in form_found
+    assert input in form_found
