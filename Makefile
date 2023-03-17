@@ -9,6 +9,8 @@ develop:  ## install dependencies and build library
 	python -m pip install requests
 	cd ..
 	pip install chromedriver
+	wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+	sudo dpkg -i google-chrome-stable_current_amd64.deb
 	cd CB_IPO
 
 
