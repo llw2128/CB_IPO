@@ -1,16 +1,8 @@
-from CB_IPO import (
-    set_page,
-    set_search_date,
-    edgar_scrape,
-    generate_df,
-    # get_ipo,
-    # search_CB,
-    # add_CB,
-    reset_url,
-    add_forms,
-)
+from CB_IPO import scrape
 from pytest import mark
 import pandas as pd
+
+tester = scrape()
 
 
 @mark.parametrize(
@@ -21,8 +13,8 @@ import pandas as pd
     ],
 )
 def test_page_set(input, output):
-    reset_url()
-    assert set_page(input) == output
+    tester.reset_url()
+    assert tester.set_page(input) == output
 
 
 @mark.parametrize(
@@ -41,7 +33,7 @@ def test_page_set(input, output):
     ],
 )
 def test_page_date(in_d1, in_d2, output):
-    assert set_search_date(in_d1, in_d2) == output
+    assert tester.set_search_date(in_d1, in_d2) == output
 
 
 @mark.parametrize(
@@ -62,9 +54,9 @@ def test_page_date(in_d1, in_d2, output):
     ],
 )
 def test_scraper(input, output):
-    reset_url()
-    set_search_date('2022-03-01', '2023-03-03')
-    ns, ds, forms = edgar_scrape(input)
+    tester.reset_url()
+    tester.set_search_date('2022-03-01', '2023-03-03')
+    ns, ds, forms = tester.edgar_scrape(input)
     assert ns == output[0]
     assert ds == output[1]
     assert len(ns) == input
@@ -86,19 +78,19 @@ test_d = {
     "input, df_out", [([4, 1], test_d)],
 )
 def test_dfgen(input, df_out):
-    reset_url()
-    set_search_date('2023-03-01', '2023-03-03')
+    tester.reset_url()
+    tester.set_search_date('2023-03-01', '2023-03-03')
     a1, a2 = input
 
     outdf = pd.DataFrame(data=df_out)
     print(outdf)
-    assert generate_df(a1, a2).equals(outdf)
+    assert tester.generate_df(a1, a2).equals(outdf)
 
 
 @mark.parametrize("input,output", [(('S-B', '10-K'), 'S-B%252C10-K'), (('10-Q', 'S-B', 'C'), '10-Q%252CS-B%252CC')])
 def test_add_forms(input, output):
-    reset_url()
-    out = add_forms(input)
+    tester.reset_url()
+    out = tester.add_forms(input)
     for i in input:
         assert i in out[1]
     assert out[1] == output
@@ -107,11 +99,11 @@ def test_add_forms(input, output):
 # Forms scraper integration test
 @mark.parametrize("input", [('S-1')])  # , '10-K'), ('10-Q', 'S-1', 'C')])
 def test_add_forms_EDGAR(input):
-    reset_url()
-    a = add_forms(input)
+    tester.reset_url()
+    a = tester.add_forms(input)
     print(a[0])
-    ls1, ls2, form_found = edgar_scrape(100)
-    # for i in forms:
-    # assert i in input
-    reset_url()
+    ls1, ls2, form_found = tester.edgar_scrape(100)
+    # for i in input:
+    #    assert i in form_found
+    # t2.reset_url()
     assert input in form_found

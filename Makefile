@@ -7,6 +7,10 @@ develop:  ## install dependencies and build library
 	python -m pip install pandas 
 	python -m pip install bs4
 	python -m pip install requests
+	cd ..
+	pip install chromedriver
+	cd CB_IPO
+
 
 build:  ## build the python library
 	python setup.py build build_ext --inplace
