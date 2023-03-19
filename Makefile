@@ -10,8 +10,8 @@ develop:  ## install dependencies and build library
 	python -m pip install pyvirtualdisplay
 	cd ..
 	pip install chromedriver
-	wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
-	sudo dpkg -i google-chrome-stable_current_amd64.deb
+	brew install brew-cask
+	brew cask install google-chrome
 	cd CB_IPO
 
 
