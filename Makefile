@@ -10,7 +10,7 @@ develop:  ## install dependencies and build library
 	python -m pip install pyvirtualdisplay
 	cd ..
 	pip install chromedriver
-	brew install brew-cask
+	brew install brew-cask-completion
 	brew cask install google-chrome
 	cd CB_IPO
 
