@@ -3,14 +3,14 @@ import pandas as pd
 
 from bs4 import BeautifulSoup as bs
 from selenium import webdriver
-from pyvirtualdisplay import Display
+#from pyvirtualdisplay import Display
 
 
 # queryApi = QueryApi(api_key=API_KEY)
 class scrape:
     def __init__(self):
-        self.display = Display(visible=0, size=(800, 800))  
-        self.display.start()
+        #self.display = Display(visible=0, size=(800, 800))  
+        #self.display.start()
         self.browser = webdriver.Chrome('./chromedriver')
         self.url_info = "https://www.sec.gov/edgar/search/#/filter_forms=S-1"
 
