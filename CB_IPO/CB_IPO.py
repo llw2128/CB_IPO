@@ -83,7 +83,7 @@ class scrape:
             # adds values to dictionary from queried pages
             for i in range(num_page - 1):
                 self.set_page(i + 2)
-                ns2, ds2 = self.edgar_scrape()
+                ns2, ds2 = self.edgar_scrape(n)
                 d['names'] += ns2
                 d['filing date'] += ds2
 
