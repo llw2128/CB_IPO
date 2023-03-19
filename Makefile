@@ -11,7 +11,7 @@ develop:  ## install dependencies and build library
 	cd ..
 	pip install chromedriver
 	brew install brew-cask-completion
-	brew cask install google-chrome
+	brew install google-chrome --cask
 	cd CB_IPO
 
 
