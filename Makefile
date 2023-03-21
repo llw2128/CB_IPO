@@ -29,7 +29,7 @@ lint:  ## run static analysis with flake8
 lints: lint
 
 format:  ## run autoformatting with black
-	python -m black CB_IPO/ setup.py
+	python -m black CB_IPO setup.py
 
 # alias
 fix: format
