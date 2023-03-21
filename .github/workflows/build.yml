@@ -40,7 +40,6 @@ jobs:
         make build
     - name: Lint
       run: |
-        make format
         make lint
     - name: Checks
       run: |

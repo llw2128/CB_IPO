@@ -8,11 +8,8 @@ develop:  ## install dependencies and build library
 	python -m pip install bs4
 	python -m pip install requests
 	python -m pip install pyvirtualdisplay
-	cd ..
-	pip install chromedriver
-	brew install brew-cask-completion
-	brew install google-chrome --cask
-	cd CB_IPO
+	python - m pip install chromedriver
+	
 
 
 build:  ## build the python library
