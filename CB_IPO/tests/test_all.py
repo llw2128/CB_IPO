@@ -54,7 +54,6 @@ def test_page_date(in_d1, in_d2, output):
     ],
 )
 def test_scraper(input, output):
-    tester.reset_url()
     tester.set_search_date('2022-03-01', '2023-03-03')
     ns, ds, forms = tester.edgar_scrape(input)
     assert ns == output[0]
