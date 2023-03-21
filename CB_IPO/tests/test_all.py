@@ -26,13 +26,14 @@ def test_page_set(input, output):
             "https://www.sec.gov/edgar/search/#/dateRange=custom&category=custom&startdt=2014-03-04&enddt=2015-03-04&filter_forms=S-1",
         ),
         (
-            '2023-03-01',
+            '2022-03-03',
             '2023-03-03',
-            "https://www.sec.gov/edgar/search/#/dateRange=custom&category=custom&startdt=2023-03-01&enddt=2023-03-03&filter_forms=S-1",
+            "https://www.sec.gov/edgar/search/#/dateRange=custom&category=custom&startdt=2022-03-03&enddt=2023-03-03&filter_forms=S-1",
         ),
     ],
 )
 def test_page_date(in_d1, in_d2, output):
+    tester.reset_url()
     assert tester.set_search_date(in_d1, in_d2) == output
 
 
@@ -54,7 +55,7 @@ def test_page_date(in_d1, in_d2, output):
     ],
 )
 def test_scraper(input, output):
-    tester.set_search_date('2023-03-01', '2023-03-03')
+    tester.set_search_date('2022-03-03', '2023-03-03')
     ns, ds, forms = tester.edgar_scrape(input)
     assert ns == output[0]
     assert ds == output[1]
@@ -78,7 +79,7 @@ test_d = {
     [([4, 1], test_d)],
 )
 def test_dfgen(input, df_out):
-    tester.set_search_date('2023-03-01', '2023-03-03')
+    tester.set_search_date('2022-03-03', '2023-03-03')
     a1, a2 = input
 
     outdf = pd.DataFrame(data=df_out)
