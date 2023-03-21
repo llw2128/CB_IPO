@@ -93,7 +93,6 @@ class scrape:
         return df
 
     def add_forms(self, list):
-
         i = self.url_info.find('filter_forms=')
         pstr = ''
 

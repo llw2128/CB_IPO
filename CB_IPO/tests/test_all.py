@@ -6,7 +6,11 @@ tester = scrape()
 
 
 @mark.parametrize(
-    "input,output", [(5, "https://www.sec.gov/edgar/search/#/filter_forms=S-1&page=5"), (4, "https://www.sec.gov/edgar/search/#/filter_forms=S-1&page=4"),],
+    "input,output",
+    [
+        (5, "https://www.sec.gov/edgar/search/#/filter_forms=S-1&page=5"),
+        (4, "https://www.sec.gov/edgar/search/#/filter_forms=S-1&page=4"),
+    ],
 )
 def test_page_set(input, output):
     tester.reset_url()
@@ -16,8 +20,16 @@ def test_page_set(input, output):
 @mark.parametrize(
     "in_d1,in_d2,output",
     [
-        ('2014-03-04', '2015-03-04', "https://www.sec.gov/edgar/search/#/dateRange=custom&category=custom&startdt=2014-03-04&enddt=2015-03-04&filter_forms=S-1",),
-        ('2012-04-23', '2022-04-23', "https://www.sec.gov/edgar/search/#/dateRange=custom&category=custom&startdt=2012-04-23&enddt=2022-04-23&filter_forms=S-1",),
+        (
+            '2014-03-04',
+            '2015-03-04',
+            "https://www.sec.gov/edgar/search/#/dateRange=custom&category=custom&startdt=2014-03-04&enddt=2015-03-04&filter_forms=S-1",
+        ),
+        (
+            '2012-04-23',
+            '2022-04-23',
+            "https://www.sec.gov/edgar/search/#/dateRange=custom&category=custom&startdt=2012-04-23&enddt=2022-04-23&filter_forms=S-1",
+        ),
     ],
 )
 def test_page_date(in_d1, in_d2, output):
@@ -26,7 +38,20 @@ def test_page_date(in_d1, in_d2, output):
 
 @mark.parametrize(
     "input, output",
-    [(4, (["U.S. GoldMining Inc.  (USGO) ", "RingCentral, Inc.  (RNG) ", "MariaDB plc  (MRDB, MRDB-WT) ", "Kenvue Inc.  (KVUE) ",], ["2023-03-03", "2023-03-03", "2023-03-03", "2023-03-03"],),)],
+    [
+        (
+            4,
+            (
+                [
+                    "U.S. GoldMining Inc.  (USGO) ",
+                    "RingCentral, Inc.  (RNG) ",
+                    "MariaDB plc  (MRDB, MRDB-WT) ",
+                    "Kenvue Inc.  (KVUE) ",
+                ],
+                ["2023-03-03", "2023-03-03", "2023-03-03", "2023-03-03"],
+            ),
+        )
+    ],
 )
 def test_scraper(input, output):
     tester.reset_url()
@@ -39,16 +64,21 @@ def test_scraper(input, output):
 
 
 test_d = {
-    'names': ["U.S. GoldMining Inc.  (USGO) ", "RingCentral, Inc.  (RNG) ", "MariaDB plc  (MRDB, MRDB-WT) ", "Kenvue Inc.  (KVUE) ",],
+    'names': [
+        "U.S. GoldMining Inc.  (USGO) ",
+        "RingCentral, Inc.  (RNG) ",
+        "MariaDB plc  (MRDB, MRDB-WT) ",
+        "Kenvue Inc.  (KVUE) ",
+    ],
     'filing date': ["2023-03-03", "2023-03-03", "2023-03-03", "2023-03-03"],
 }
 
 
 @mark.parametrize(
-    "input, df_out", [([4, 1], test_d)],
+    "input, df_out",
+    [([4, 1], test_d)],
 )
 def test_dfgen(input, df_out):
-    tester.reset_url()
     tester.set_search_date('2023-03-01', '2023-03-03')
     a1, a2 = input
 
