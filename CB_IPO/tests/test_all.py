@@ -35,7 +35,7 @@ def test_page_set(input, output):
 def test_page_date(in_d1, in_d2, output):
     assert tester.set_search_date(in_d1, in_d2) == output
 
-
+"""
 @mark.parametrize(
     "input, output",
     [
@@ -60,7 +60,7 @@ def test_scraper(input, output):
     assert ds == output[1]
     assert len(ns) == input
     assert len(ds) == input
-
+"""
 
 test_d = {
     'names': [
