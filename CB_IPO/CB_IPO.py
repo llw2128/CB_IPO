@@ -11,6 +11,7 @@ from selenium import webdriver
 class scrape:
     def __init__(self):
         # self.browser = webdriver.Chrome('chromedriver')
+
         self.url_info = "https://www.sec.gov/edgar/search/#/filter_forms=S-1"
 
         # TEST
@@ -54,14 +55,18 @@ class scrape:
         return self.url_info
 
     def edgar_scrape(self, num):
-        self.browser = webdriver.Chrome('chromedriver')  # new
+        self.driver = webdriver.Chrome('chromedriver')  # new
         c_names = []
         c_dates = []
         form_types = set()
-        self.browser.get(self.url_info)
-        source = self.browser.page_source
+
+        print("my url is  :     ")
+        print(self.url_info)
+
+        self.driver.get(self.url_info)
+        source = self.driver.page_source
         html_s = bs(source, 'html.parser')
-        self.browser.quit()
+
         # find name for all recent S-1 filers with the  SEC
         i = 0
         for item in html_s.findAll(attrs={'class': 'entity-name'}):
@@ -90,7 +95,7 @@ class scrape:
                 form_types.add(item.text[:i])
                 i3 += 1
         # print(c_names)
-
+        self.driver.quit()
         return (c_names, c_dates, form_types)
 
     # argument is the number of pages to be pulled using scraper, deafult 1
