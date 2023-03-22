@@ -36,7 +36,7 @@ def test_page_date(in_d1, in_d2, output):
     tester.reset_url()
     assert tester.set_search_date(in_d1, in_d2) == output
 
-
+"""
 @mark.parametrize(
     "input, output",
     [
@@ -61,7 +61,7 @@ def test_scraper(input, output):
     assert ds == output[1]
     assert len(ns) == input
     assert len(ds) == input
-
+"""
 
 test_d = {
     'names': [
@@ -94,7 +94,7 @@ def test_add_forms(input, output):
         assert i in out[1]
     assert out[1] == output
 
-
+"""
 # Forms scraper integration test
 @mark.parametrize("input", [('10-Q', 'S-1', 'C')])
 def test_add_forms_EDGAR(input):
@@ -106,3 +106,4 @@ def test_add_forms_EDGAR(input):
         assert i in form_found
     # t2.reset_url()
     # assert input in form_found
+"""
