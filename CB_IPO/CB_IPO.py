@@ -61,7 +61,7 @@ class scrape:
         self.browser.get(self.url_info)
         source = self.browser.page_source
         html_s = bs(source, 'html.parser')
-        # self.browser.close()
+        self.browser.quit()
         # find name for all recent S-1 filers with the  SEC
         i = 0
         for item in html_s.findAll(attrs={'class': 'entity-name'}):
