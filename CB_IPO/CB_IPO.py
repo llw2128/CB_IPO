@@ -59,7 +59,7 @@ class scrape:
 
     def edgar_scrape(self, num):
         self.driver = webdriver.Chrome('chromedriver')  # new
-        self.driver.implicitly_wait(19)
+        self.driver.implicitly_wait(300)
         self.driver.maximize_window()
 
         c_names = []
