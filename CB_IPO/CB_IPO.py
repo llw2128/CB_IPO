@@ -3,6 +3,10 @@ import pandas as pd
 
 from bs4 import BeautifulSoup as bs
 from selenium import webdriver
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.common.exceptions import TimeoutException
+from selenium.webdriver.common.by import By
 
 # from pyvirtualdisplay import Display
 
@@ -70,6 +74,12 @@ class scrape:
         print(self.url_info)
 
         self.driver.get(self.url_info)
+
+        try:
+            wrapper = WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.CLASS_NAME, "entity-name")))
+        except TimeoutException:
+            print("Page did not load")
+
         source = self.driver.page_source
         html_s = bs(source, 'html.parser')
 
