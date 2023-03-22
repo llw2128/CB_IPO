@@ -1,12 +1,13 @@
 # CB_IPO
 An API for taking new IPO data and researching Crunchbase data
 
-[![Build Status](https://github.com/llw2128/CB_IPO/workflows/Build%20Status/badge.svg?branch=main](https://github.com/llw2128/CB_IPO/actions?query=workflow%3A%22Build+Status%22)
+[![Build Status](https://github.com/llw2128/CB_IPO/workflows/Build%20Status/badge.svg?branch=main)](https://github.com/llw2128/CB_IPO/actions?query=workflow%3A%22Build+Status%22)
 
 [![codecov](https://codecov.io/gh/llw2128/CB_IPO/branch/main/graph/badge.svg)](https://codecov.io/gh/llw2128/CB_IPO)
 
-[![License](https://img.shields.io/badge/License-Apache_2.0-green.svg?style=flat-square)](https://opensource.org/licenses/Apache-2.0)  
-![](https://img.shields.io/github/issues/llw2128/CB_IPO?style=flat-square)
+[![License](https://img.shields.io/badge/License-Apache_2.0-green.svg)](https://opensource.org/licenses/Apache-2.0)  
+
+![](https://img.shields.io/github/issues/llw2128/CB_IPO)
 
 ## Overview
-Researching information on trends for companies can be incredibly tedious, this library will automate part of the proccess. CBSummary is a library that will fetch information on recent and historical IPOs and utilize the Crunchbase API in order to generate different summary tables of the data available on Crunchbase. This will output information on founding, descriptions and other relevant information for certain queries. Besides summaries of these companies the library will also generate charts regarding trends such as those by industry for new companies going public.
+Researching information on trends for companies can be incredibly tedious, this library will automate part of the proccess. CBSummary is a library that will fetch information on recent and historical IPOs by scraping the SEC EDGAR database. It will utilize the Crunchbase API in order to generate different summary tables of the data available on Crunchbase. This will output information on founding, descriptions and other relevant information for certain queries. Besides summaries of these companies the library will also generate charts regarding trends such as those by industry for new companies going public.
