@@ -7,9 +7,9 @@ requires = [
 build-backend="setuptools.build_meta"
 
 [project]
-name = "example-project-python"
-authors = [{name = "Your Name", email = "Your_Email@gmail.com"}]
-description="An example python project"
+name = "CB_IPO"
+authors = [{name = "Leon", email = "wu.leon@columbia.edu"}]
+description="Crunchbase and SEC filing scraper"
 readme = "README.md"
 version = "0.0.1"
 requires-python = ">=3.7"
@@ -33,7 +33,7 @@ classifiers = [
 file = "LICENSE"
 
 [project.urls]
-repository = "https://github.com/columbiaoss/example-project-python"
+repository = "https://github.com/llw2128/CB_IPO"
 
 [project.optional-dependencies]
 develop = [
@@ -52,8 +52,8 @@ develop = [
 
 [tool.black]
 color = true
-line-length = 120
-target-version = ['py310']
+line-length = 200
+target-version = ['py39']
 skip-string-normalization = true
 
 [tool.check-manifest]
@@ -64,15 +64,16 @@ ignore = [
 ignore = ['E203', 'W503']
 max-line-length=120
 exclude=[
-    'example_project_python/tests/*'
+    'CB_IPO/tests/*'
 ]
 per-file-ignores= [
-    'example_project_python/__init__.py:F401, F403'
+    'CB_IPO/__init__.py:F401, F403',
+    'CB_IPO/__main__.py:F401, F403'
 ]
 
 
 [tool.isort]
-line_length = 120
+line_length = 160
 known_first_party = 'pydantic'
 multi_line_output = 3
 include_trailing_comma = true
@@ -80,7 +81,7 @@ force_grid_wrap = 0
 combine_as_imports = true
 
 [tool.mypy]
-python_version = '3.10'
+python_version = '3.9'
 # show_error_codes = true
 # follow_imports = 'silent'
 # strict_optional = true
@@ -97,4 +98,4 @@ python_version = '3.10'
 
 [tool.pytest.ini_options]
 asyncio_mode = 'strict'
-testpaths = 'example_project_python/tests'
+testpaths = 'CB_IPO/tests'
