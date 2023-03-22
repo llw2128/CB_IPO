@@ -10,8 +10,6 @@ from selenium import webdriver
 # queryApi = QueryApi(api_key=API_KEY)
 class scrape:
     def __init__(self):
-        # self.display = Display(visible=0, size=(800, 800))
-        # self.display.start()
         # self.browser = webdriver.Chrome('chromedriver')
         self.url_info = "https://www.sec.gov/edgar/search/#/filter_forms=S-1"
 
@@ -63,7 +61,7 @@ class scrape:
         self.browser.get(self.url_info)
         source = self.browser.page_source
         html_s = bs(source, 'html.parser')
-
+        # self.browser.close()
         # find name for all recent S-1 filers with the  SEC
         i = 0
         for item in html_s.findAll(attrs={'class': 'entity-name'}):
@@ -92,7 +90,7 @@ class scrape:
                 form_types.add(item.text[:i])
                 i3 += 1
         # print(c_names)
-        self.browser.close()
+
         return (c_names, c_dates, form_types)
 
     # argument is the number of pages to be pulled using scraper, deafult 1
