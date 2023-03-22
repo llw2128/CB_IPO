@@ -82,6 +82,7 @@ test_d = {
 def test_dfgen(input, df_out):
     tester.url_info = 'https://www.sec.gov/edgar/search/#/dateRange=custom&category=custom&startdt=2022-03-01&enddt=2023-03-03&filter_forms=S-1'
     a1, a2 = input
+    ns, ds, forms = tester.edgar_scrape(a1)
     print(tester.generate_df(a1, a2))
     outdf = pd.DataFrame(data=df_out)
     assert tester.generate_df(a1, a2).equals(outdf)
