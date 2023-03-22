@@ -7,7 +7,6 @@ develop:  ## install dependencies and build library
 	python -m pip install pandas 
 	python -m pip install bs4
 	python -m pip install requests
-	python -m pip install pyvirtualdisplay
 	python - m pip install chromedriver
 	
 

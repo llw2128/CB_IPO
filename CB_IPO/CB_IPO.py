@@ -12,8 +12,25 @@ class scrape:
     def __init__(self):
         # self.display = Display(visible=0, size=(800, 800))
         # self.display.start()
-        self.browser = webdriver.Chrome('chromedriver')
+        # self.browser = webdriver.Chrome('chromedriver')
         self.url_info = "https://www.sec.gov/edgar/search/#/filter_forms=S-1"
+
+        # TEST
+        """
+        df_out = {
+        'names': [
+        "U.S. GoldMining Inc.  (USGO) ",
+        "RingCentral, Inc.  (RNG) ",
+        "MariaDB plc  (MRDB, MRDB-WT) ",
+        "Kenvue Inc.  (KVUE) ",
+        ],
+        'filing date': ["2023-03-03", "2023-03-03", "2023-03-03", "2023-03-03"],
+        }
+        self.url_info = 'https://www.sec.gov/edgar/search/#/dateRange=custom&category=custom&startdt=2022-03-01&enddt=2023-03-03&filter_forms=S-1'
+        outdf = pd.DataFrame(data=df_out)
+        print(self.generate_df(4, 1).equals(outdf))
+        print()
+        print(outdf)"""
 
     def set_page(self, pNo):
         pstr = '&page={}'.format(pNo)
@@ -38,6 +55,7 @@ class scrape:
         return self.url_info
 
     def edgar_scrape(self, num):
+        self.browser = webdriver.Chrome('chromedriver')  # new
         c_names = []
         c_dates = []
         form_types = set()
@@ -73,6 +91,7 @@ class scrape:
                 form_types.add(item.text[:i])
                 i3 += 1
         # print(c_names)
+        self.browser.close()
         return (c_names, c_dates, form_types)
 
     # argument is the number of pages to be pulled using scraper, deafult 1
@@ -132,9 +151,9 @@ class scrape:
     # set_search_date('2018-02-20','2023-02-10')
     # print(url_info)
     # generate_df(3)
+
     """
-    reset_url()
-    set_search_date('2023-03-01', '2023-03-03')
+    url_info = 'https://www.sec.gov/edgar/search/#/dateRange=custom&category=custom&startdt=2022-03-01&enddt=2023-03-03&filter_forms=S-1'
 
     a =  {
                 'names': [
@@ -156,3 +175,6 @@ class scrape:
     add_forms(('10-Q', 'S-B', 'C'))
     ls1, ls2, forms = edgar_scrape(100)
     print(forms)"""
+
+
+# n = scrape()

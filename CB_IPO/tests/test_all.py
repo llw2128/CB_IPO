@@ -26,9 +26,9 @@ def test_page_set(input, output):
             "https://www.sec.gov/edgar/search/#/dateRange=custom&category=custom&startdt=2014-03-04&enddt=2015-03-04&filter_forms=S-1",
         ),
         (
-            '2022-03-03',
-            '2023-03-03',
-            "https://www.sec.gov/edgar/search/#/dateRange=custom&category=custom&startdt=2022-03-03&enddt=2023-03-03&filter_forms=S-1",
+            '2022-04-03',
+            '2023-04-03',
+            "https://www.sec.gov/edgar/search/#/dateRange=custom&category=custom&startdt=2022-04-03&enddt=2023-04-03&filter_forms=S-1",
         ),
     ],
 )
@@ -55,7 +55,7 @@ def test_page_date(in_d1, in_d2, output):
     ],
 )
 def test_scraper(input, output):
-    tester.set_search_date('2022-03-03', '2023-03-03')
+    tester.url_info = 'https://www.sec.gov/edgar/search/#/dateRange=custom&category=custom&startdt=2022-03-01&enddt=2023-03-03&filter_forms=S-1'
     ns, ds, forms = tester.edgar_scrape(input)
     assert ns == output[0]
     assert ds == output[1]
@@ -79,11 +79,10 @@ test_d = {
     [([4, 1], test_d)],
 )
 def test_dfgen(input, df_out):
-    tester.set_search_date('2022-03-03', '2023-03-03')
+    tester.url_info = 'https://www.sec.gov/edgar/search/#/dateRange=custom&category=custom&startdt=2022-03-01&enddt=2023-03-03&filter_forms=S-1'
     a1, a2 = input
-
+    print(tester.generate_df(a1, a2))
     outdf = pd.DataFrame(data=df_out)
-    print(outdf)
     assert tester.generate_df(a1, a2).equals(outdf)
 
 
@@ -97,13 +96,13 @@ def test_add_forms(input, output):
 
 
 # Forms scraper integration test
-@mark.parametrize("input", [('S-1')])  # , '10-K'), ('10-Q', 'S-1', 'C')])
+@mark.parametrize("input", [('10-Q', 'S-1', 'C')])
 def test_add_forms_EDGAR(input):
     tester.reset_url()
     a = tester.add_forms(input)
     print(a[0])
     ls1, ls2, form_found = tester.edgar_scrape(100)
-    # for i in input:
-    #    assert i in form_found
+    for i in input:
+        assert i in form_found
     # t2.reset_url()
-    assert input in form_found
+    # assert input in form_found
