@@ -26,7 +26,8 @@ class scrape:
         ],
         'filing date': ["2023-03-03", "2023-03-03", "2023-03-03", "2023-03-03"],
         }
-        self.url_info = 'https://www.sec.gov/edgar/search/#/dateRange=custom&category=custom&startdt=2022-03-01&enddt=2023-03-03&filter_forms=S-1'
+        self.url_info = 'https://www.sec.gov/edgar/search/#/dateRange=cus
+        tom&category=custom&startdt=2022-03-01&enddt=2023-03-03&filter_forms=S-1'
         outdf = pd.DataFrame(data=df_out)
         print(self.generate_df(4, 1).equals(outdf))
         print()
@@ -153,8 +154,6 @@ class scrape:
     # generate_df(3)
 
     """
-    url_info = 'https://www.sec.gov/edgar/search/#/dateRange=custom&category=custom&startdt=2022-03-01&enddt=2023-03-03&filter_forms=S-1'
-
     a =  {
                 'names': [
                     "U.S. GoldMining Inc.  (USGO) ",
