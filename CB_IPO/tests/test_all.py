@@ -36,6 +36,7 @@ def test_page_date(in_d1, in_d2, output):
     tester.reset_url()
     assert tester.set_search_date(in_d1, in_d2) == output
 
+
 """
 @mark.parametrize(
     "input, output",
@@ -93,6 +94,7 @@ def test_add_forms(input, output):
     for i in input:
         assert i in out[1]
     assert out[1] == output
+
 
 """
 # Forms scraper integration test
