@@ -76,7 +76,7 @@ class scrape:
         self.driver.get(self.url_info)
 
         try:
-            wrapper = WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.CLASS_NAME, "entity-name")))
+            WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.CLASS_NAME, "entity-name")))
         except TimeoutException:
             print("Page did not load")
 
