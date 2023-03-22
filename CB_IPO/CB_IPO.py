@@ -3,6 +3,7 @@ import pandas as pd
 
 from bs4 import BeautifulSoup as bs
 from selenium import webdriver
+from selenium.webdriver.support.wait import WebDriverWait
 
 # from pyvirtualdisplay import Display
 
@@ -54,15 +55,20 @@ class scrape:
         self.url_info = "https://www.sec.gov/edgar/search/#/{}filter_forms=S-1".format(dates)
         return self.url_info
 
+    def document_initialised(self):
+        return self.driver.execute_script("return initialised")
+
     def edgar_scrape(self, num):
         self.driver = webdriver.Chrome('chromedriver')  # new
+        self.driver.maximize_window()
+
         c_names = []
         c_dates = []
         form_types = set()
 
         print("my url is  :     ")
         print(self.url_info)
-
+        WebDriverWait(self.driver, timeout=10)
         self.driver.get(self.url_info)
         source = self.driver.page_source
         html_s = bs(source, 'html.parser')
