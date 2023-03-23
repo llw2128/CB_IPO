@@ -3,6 +3,13 @@
 #########
 develop:  ## install dependencies and build library
 	python -m pip install -e .[develop]
+	python -m pip install selenium
+	python -m pip install pandas 
+	python -m pip install bs4
+	python -m pip install requests
+	python - m pip install chromedriver
+	
+
 
 build:  ## build the python library
 	python setup.py build build_ext --inplace
@@ -21,7 +28,7 @@ lint:  ## run static analysis with flake8
 lints: lint
 
 format:  ## run autoformatting with black
-	python -m black CB_IPO/ setup.py
+	python -m black CB_IPO setup.py
 
 # alias
 fix: format

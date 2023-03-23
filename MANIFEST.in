@@ -3,10 +3,11 @@ graft CB_IPO
 include LICENSE
 include README.md
 
+
 include .bumpversion.cfg
 include pyproject.toml
 include Makefile
-
+include CONTRIBUTING.md
 prune .github
 exclude .gitignore
 exclude .gitattributes
