@@ -6,7 +6,6 @@ develop:  ## install dependencies and build library
 	python -m pip install selenium
 	python -m pip install pandas 
 	python -m pip install bs4
-	python -m pip install requests
 	python - m pip install chromedriver
 	
 
