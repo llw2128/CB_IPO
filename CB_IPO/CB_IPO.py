@@ -1,40 +1,12 @@
-import requests
 import pandas as pd
-
+import time
 from bs4 import BeautifulSoup as bs
 from selenium import webdriver
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
-from selenium.common.exceptions import TimeoutException
-from selenium.webdriver.common.by import By
-
-# from pyvirtualdisplay import Display
 
 
-# queryApi = QueryApi(api_key=API_KEY)
 class scrape:
     def __init__(self):
-        # self.browser = webdriver.Chrome('chromedriver')
-
         self.url_info = "https://www.sec.gov/edgar/search/#/filter_forms=S-1"
-
-        # TEST
-        """
-        df_out = {
-        'names': [
-        "U.S. GoldMining Inc.  (USGO) ",
-        "RingCentral, Inc.  (RNG) ",
-        "MariaDB plc  (MRDB, MRDB-WT) ",
-        "Kenvue Inc.  (KVUE) ",
-        ],
-        'filing date': ["2023-03-03", "2023-03-03", "2023-03-03", "2023-03-03"],
-        }
-        self.url_info = 'https://www.sec.gov/edgar/search/#/dateRange=cus
-        tom&category=custom&startdt=2022-03-01&enddt=2023-03-03&filter_forms=S-1'
-        outdf = pd.DataFrame(data=df_out)
-        print(self.generate_df(4, 1).equals(outdf))
-        print()
-        print(outdf)"""
 
     def set_page(self, pNo):
         pstr = '&page={}'.format(pNo)
@@ -60,20 +32,15 @@ class scrape:
         return self.driver.execute_script("return initialised")
 
     def edgar_scrape(self, num):
-        self.driver = webdriver.Chrome('chromedriver')
-        self.driver.maximize_window()
+        driver = webdriver.Chrome('chromedriver')
 
         c_names = []
         c_dates = []
         form_types = set()
-        self.driver.get(self.url_info)
+        driver.get(self.url_info)
+        time.sleep(10)
 
-        try:
-            WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.CLASS_NAME, "entity-name")))
-        except TimeoutException:
-            print("Page did not load")
-
-        source = self.driver.page_source
+        source = driver.page_source
         html_s = bs(source, 'html.parser')
 
         # find name for all recent S-1 filers with the  SEC
@@ -103,8 +70,7 @@ class scrape:
                 i = item.text.find(' ')
                 form_types.add(item.text[:i])
                 i3 += 1
-        # print(c_names)
-        self.driver.quit()
+        driver.quit()
         return (c_names, c_dates, form_types)
 
     # argument is the number of pages to be pulled using scraper, deafult 1
@@ -113,7 +79,6 @@ class scrape:
         d = {'names': ns, 'filing date': ds}
 
         if num_page > 1:
-            # adds values to dictionary from queried pages
             for i in range(num_page - 1):
                 self.set_page(i + 2)
                 ns2, ds2 = self.edgar_scrape(n)
@@ -135,54 +100,75 @@ class scrape:
 
         return (self.url_info, pstr)
 
-    def get_ipo(self):
-        """
-        query = {
-            "query": {"query_string": {"query": "formType:\"S-1\" AND filedAt:{2020-01-01 TO 2020-12-31}"}},
-            "from": "0",
-            "size": "10",
-            "sort": [{"filedAt": {"order": "desc"}}],
-        }"""
-        # filings = q.get_filings(query)
+    def get_anums(self, cik, num):
+        annual10k_url = "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK={}&type=10-k".format(cik)
+        doc_links = []
+        driver = webdriver.Chrome('chromedriver')
+        driver.get(annual10k_url)
+        time.sleep(10)
+        page = driver.page_source
+        soup = bs(page, "html.parser")
 
-    ########
+        i = 0
+        for item in soup.findAll(id='interactiveDataBtn'):
+            if i == num:
+                break
+            else:
+                s_ind = str(item).find('accession_number=')
+                e_ind = str(item).find('&amp;xbrl')
+                doc_links.append(str(item)[s_ind + len('accession_number=') : e_ind].replace('-', ''))
+                i += 1
 
-    def search_CB(self, name):
-        CB_key = input('Enter CB API: ')
-        req = 'https://api.crunchbase.com/api/v4/autocompletes?query={}&limit=15&user_key={}'.format(name, CB_key)
-        CB_info = requests.get(req).text
-        print(CB_info)
-        return CB_info[0]
+        print(doc_links)
+        driver.quit()
+        return doc_links
 
-    """
-    def add_CB(self, dframe):
-        gen_descr = []
+    def get_refs(self, cik, num):
+        edgar_url = "https://www.sec.gov/edgar/search/#/ciks={}&forms=10-K".format(cik)
+        refs = []
+        driver = webdriver.Chrome('chromedriver')
+        driver.get(edgar_url)
+        time.sleep(10)
+        page = driver.page_source
+        soup = bs(page, "html.parser")
+        comp_name = ''
 
-        for r in dframe.rows:
-            gen_descr.append(self.search_CB(r['names']))
-        dframe['CB Description'] = gen_descr
-    """
-    """
-    a =  {
-                'names': [
-                    "U.S. GoldMining Inc.  (USGO) ",
-                    "RingCentral, Inc.  (RNG) ",
-                    "MariaDB plc  (MRDB, MRDB-WT) ",
-                    "Kenvue Inc.  (KVUE) ",
-                ],
-                'filing date': ["2023-03-03", "2023-03-03", "2023-03-03", "2023-03-03"],
-            }
+        i = 0
+        for item in soup.findAll(attrs={"class": "preview-file"}):
+            if i == num:
+                break
+            else:
+                refs.append(item['data-file-name'])
+                i += 1
 
+        i2 = 0
+        for item in soup.findAll(attrs={'class': 'entity-name'}):
+            if i2 == num:
+                break
+            elif item.text != 'Filing entity/person':
+                comp_name = item.text
+                i += 1
+        driver.quit()
+        return refs, comp_name
 
-    outdf = pd.DataFrame(data=a)
-    print(outdf.equals(generate_df(4, 1)))
-    print()
-    print(outdf)
+    def create_links(self, cik, num):
+        anum_list = self.get_anums(cik, num)
+        reflist, c_name = self.get_refs(cik, num)
+        link_list = []
+        for i in range(num):
+            a = anum_list[i]
+            r = reflist[i]
+            link_list.append('https://www.sec.gov/ix?doc=/Archives/edgar/data/{}/{}/{}'.format(cik, a, r))
+        return link_list, c_name
 
-    reset_url()
-    add_forms(('10-Q', 'S-B', 'C'))
-    ls1, ls2, forms = edgar_scrape(100)
-    print(forms)"""
-
-
-# n = scrape()
+    def scrape_xbrl(self, link):
+        driver = webdriver.Chrome('chromedriver')
+        driver.get(link)
+        time.sleep(10)
+        page = driver.page_source
+        soup = bs(page, "html.parser")
+        TA = soup.find(attrs={'name': "us-gaap:Assets"}).text
+        TL = soup.find(attrs={'name': "us-gaap:Liabilities"}).text
+        NI = soup.find(attrs={'name': "us-gaap:ProfitLoss"}).text
+        driver.quit()
+        return [TA, TL, NI]
