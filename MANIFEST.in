@@ -8,6 +8,12 @@ include .bumpversion.cfg
 include pyproject.toml
 include Makefile
 include CONTRIBUTING.md
+
+recursive-include docs *.bat
+recursive-include docs *.py
+recursive-include docs *.rst
+recursive-include docs Makefile
+
 prune .github
 exclude .gitignore
 exclude .gitattributes
