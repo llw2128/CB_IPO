@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Methods &mdash; CB_IPO 0.1.0 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Examples" href="examples.html" />
+    <link rel="prev" title="Usage" href="usage.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            CB_IPO
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Quick Start:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usage.html">Usage</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Methods</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples.html">Examples</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">CB_IPO</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Methods</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/methods.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-CB_IPO">
+<span id="methods"></span><h1>Methods<a class="headerlink" href="#module-CB_IPO" title="Permalink to this headline">¶</a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="CB_IPO.scrape">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">CB_IPO.</span></span><span class="sig-name descname"><span class="pre">scrape</span></span><a class="headerlink" href="#CB_IPO.scrape" title="Permalink to this definition">¶</a></dt>
+<dd><p>This class creates an object that can scrape for various filings and and attributes of SEC filings</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="CB_IPO.scrape.url_info">
+<span class="sig-name descname"><span class="pre">url_info</span></span><a class="headerlink" href="#CB_IPO.scrape.url_info" title="Permalink to this definition">¶</a></dt>
+<dd><p>The url to be used for scraping the site</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="CB_IPO.scrape.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#CB_IPO.scrape.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Instantiates a scraper object, with a default search space of recent S-1 filings</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="CB_IPO.scrape.set_page">
+<span class="sig-name descname"><span class="pre">set_page</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">page_number</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#CB_IPO.scrape.set_page" title="Permalink to this definition">¶</a></dt>
+<dd><p>Modifies the page number being opened from the search results, and modifies url_info as such</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>page_number</strong> (<em>int</em>) – The page number in search results to be opened</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A string of the modified url</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="CB_IPO.scrape.reset_url">
+<span class="sig-name descname"><span class="pre">reset_url</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#CB_IPO.scrape.reset_url" title="Permalink to this definition">¶</a></dt>
+<dd><p>Resets the url to only search for the most recent S-1 forms, and modifies url_info as such</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>A string of the original url</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="CB_IPO.scrape.set_search_date">
+<span class="sig-name descname"><span class="pre">set_search_date</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">start_date</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">end_date</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#CB_IPO.scrape.set_search_date" title="Permalink to this definition">¶</a></dt>
+<dd><p>Modified the search to look between two specific dates, and modifies url_info as such</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>start_date</strong> (<em>str</em>) – Start of the date range YYYY-MM-DD format</p></li>
+<li><p><strong>end_date</strong> (<em>str</em>) – End of the date range YYYY-MM-DD format</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A string of the modified url</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="CB_IPO.scrape.edgar_scrape">
+<span class="sig-name descname"><span class="pre">edgar_scrape</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">num</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#CB_IPO.scrape.edgar_scrape" title="Permalink to this definition">¶</a></dt>
+<dd><p>Finds the names, dates, and types of forms filed by different companies</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>num</strong> (<em>int</em>) – The number of entities to be scraped from a page</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A list of company names, a list of filing dates, and a set of filing types in chronological order</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>tuple</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><strong>ValueError</strong> – If <cite>num</cite> is greater than 100</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="CB_IPO.scrape.generate_df">
+<span class="sig-name descname"><span class="pre">generate_df</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">num_entries</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">100</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_pages</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#CB_IPO.scrape.generate_df" title="Permalink to this definition">¶</a></dt>
+<dd><p>Finds the names, dates, and types of forms filed by different companies</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>num_entries</strong> (<em>int</em>) – The number of entities to be scraped from a page</p></li>
+<li><p><strong>num_pages</strong> (<em>int</em>) – The number of pages to be scraped</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A dataframe of the companies scraped and the dates they filed</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>pandas.DataFrame</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><strong>ValueError</strong> – If <cite>num_entries</cite> is greater than 100</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="CB_IPO.scrape.add_forms">
+<span class="sig-name descname"><span class="pre">add_forms</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">forms_list</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#CB_IPO.scrape.add_forms" title="Permalink to this definition">¶</a></dt>
+<dd><p>Updates query to include certain form types, and modifies url_info as such</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>forms_list</strong> (<em>list</em>) – List of strings for forms to search for</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A tuple of the string for the new url, and the appended forms</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>tuple</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="CB_IPO.scrape.get_anums">
+<span class="sig-name descname"><span class="pre">get_anums</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cik</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#CB_IPO.scrape.get_anums" title="Permalink to this definition">¶</a></dt>
+<dd><p>scrapes accession numbers from a page when given a cik</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>cik</strong> (<em>int</em>) – The cik id for a company</p></li>
+<li><p><strong>num</strong> (<em>int</em>) – The number of entities to be scraped from a page</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>a list of accession numbers relating to files for a cik</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="CB_IPO.scrape.get_refs">
+<span class="sig-name descname"><span class="pre">get_refs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cik</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#CB_IPO.scrape.get_refs" title="Permalink to this definition">¶</a></dt>
+<dd><p>Finds the reference numbers for filings and company name for a given cik</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>cik</strong> (<em>int</em>) – The cik id for a company</p></li>
+<li><p><strong>num</strong> (<em>int</em>) – The number of entities to be scraped from a page</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A list of filing reference numbers and the name of the company associated with a cik</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>tuple</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="CB_IPO.scrape.create_links">
+<span class="sig-name descname"><span class="pre">create_links</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cik</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#CB_IPO.scrape.create_links" title="Permalink to this definition">¶</a></dt>
+<dd><p>Finds the links for xrbl versions of filings for a given cik</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>cik</strong> (<em>int</em>) – The cik id for a company</p></li>
+<li><p><strong>num</strong> (<em>int</em>) – The number of entities to be scraped from a page</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A list of links to filings and the name of the company associated with a cik</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>tuple</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="CB_IPO.scrape.scrape_xbrl">
+<span class="sig-name descname"><span class="pre">scrape_xbrl</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">link</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#CB_IPO.scrape.scrape_xbrl" title="Permalink to this definition">¶</a></dt>
+<dd><p>Finds the total assets, liabilities, and net income in a filing
+:param link: link to an xbrl for a 10-K filing
+:type link: str</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>A tuple of the balance sheet’s total assets, liabilities, and income statement’s net income</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>tuple</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="usage.html" class="btn btn-neutral float-left" title="Usage" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="examples.html" class="btn btn-neutral float-right" title="Examples" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Leon Wu.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
