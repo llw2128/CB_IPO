@@ -198,8 +198,6 @@ class scrape:
                 e_ind = str(item).find('&amp;xbrl')
                 doc_links.append(str(item)[s_ind + len('accession_number=') : e_ind].replace('-', ''))
                 i += 1
-
-        print(doc_links)
         driver.quit()
         return doc_links
 

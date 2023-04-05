@@ -64,7 +64,8 @@ ignore = [
 ignore = ['E203', 'W503']
 max-line-length=120
 exclude=[
-    'CB_IPO/tests/*'
+    'CB_IPO/tests/*',
+    'CB_IPO/example.ipynb*'
 ]
 per-file-ignores= [
     'CB_IPO/__init__.py:F401, F403',

@@ -11,41 +11,64 @@ This is a library designed for quick webscraping in finding information on SEC f
 ## Overview
 Researching information on trends for companies can be incredibly tedious, this library will automate part of the proccess making DCF building and IPO research easier. CB_IPO is a library that will fetch information on recent and historical IPOs by scraping the SEC EDGAR database for S-1 filings. These queries can also be modified to search for certain dates, and additional forms. This data can subsequently be placed in a pandas dataframe for the sake of easy viewing. A second proccess this autmoates is finding the specific 10-K filings for a company. By inputing a cik, a list of 10-k filing links will be returned. With these links, the library also has a function for using a 10-k link and returning a list of info such as assets, liabilities, and income.
 
+## Example
+Suppose I want to find companies that have filed either an S-1, 10-K or 10-Q between January 2021 and March 2023
+```python
+sc = scrape()
+sc.set_search_date("2021-01-01", "2023-03-31")
+sc.add_forms(['S-1','10-K', '10-Q'])
+dataframe = sc.generate_df(10, 1)
+```
+Then this dataframe is returned
+```
+                                                names filing date
+0               Inhibikase Therapeutics, Inc.  (IKT)   2023-03-31
+1                       AMERINST INSURANCE GROUP LTD   2023-03-31
+2                      SLM Student Loan Trust 2013-5   2023-03-31
+3   Games & Esports Experience Acquisition Corp.  ...  2023-03-31
+4   Bilander Acquisition Corp.  (TWCB, TWCBU, TWCBW)   2023-03-31
+5                                VirTra, Inc  (VTSI)   2023-03-31
+6             Actinium Pharmaceuticals, Inc.  (ATNM)   2023-03-31
+7                              Genprex, Inc.  (GNPX)   2023-03-31
+8                           Mega Matrix Corp.  (MPU)   2023-03-31
+9       Digital Media Solutions, Inc.  (DMS, DMS-WT)   2023-03-31
+```
+
 ## Installation
 `CB_IPO` can be installed via PyPi by running:
-```
+```python
 pip install CB_IPO
 ```
 
 ## Quick Start
 To use `CB_IPO` instantiate an instance by calling 
-```
+```python
 instance = scrape()
 ``` 
 
 To adjust search date ranges run (Dates in YYYY-MM-DD)
-```
+```python
 instance.set_search_date(START, END)
 ```
 
 To add form types to the search run
-```
+```python
 instance.add_forms(['S-1','10-K'])
 ```
 
 To get a dataframe with all companies filing within the specified paramateres and filing dates run
 
-```
+```python
 instance.generate_df(Number of entries per page, number of pages)
 ```
 
 To get a list of links to 10-K filings by a company given CIK
-```
+```python
 instance.create_links(cik, number of files needed)
 ```
 
 To scrape a 10-K link for assets, liabilities, and Net Income run
-```
+```python
 instance.scrape_xbrl(link)
 ```
 ## Details
