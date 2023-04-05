@@ -12,6 +12,7 @@ include CONTRIBUTING.md
 recursive-include docs *.bat
 recursive-include docs *.py
 recursive-include docs *.rst
+recursive-include docs *.ipynb
 recursive-include docs Makefile
 
 prune .github

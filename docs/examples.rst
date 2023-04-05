@@ -1,2 +1,4 @@
-Examples
-========
+Example Uses
+============
+.. toctree::
+    Example Cases
