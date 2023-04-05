@@ -102,10 +102,11 @@ docs:
 
 pages: 
 	rm -rf $(TMPREPO)
-	git clone -b gh-pages git@github.com: https://github.com/llw2128/CB_IPO.git $(TMPREPO)
+	git clone -b gh-pages https://github.com/llw2128/CB_IPO.git $(TMPREPO)
 	rm -rf $(TMPREPO)/*
-	cp -r docs/build/html/* $(TMPREPO)
+	cp -r docs/_build/html/* $(TMPREPO)
 	cd $(TMPREPO);\
+	touch .nojekyll
 	git add -A ;\
 	git commit -a -m 'auto-updating docs' ;\
 	git push
