@@ -66,10 +66,21 @@ To get a list of links to 10-K filings by a company given CIK
 instance.create_links(cik, number of files needed)
 ```
 
-To scrape a 10-K link for assets, liabilities, and Net Income run
+To scrape a 10-K link for elements like assets, liabilities, and Net Income run
 ```python
 instance.scrape_xbrl(link)
 ```
+
+To calculate financial ratios from a dicitonary of financial elements run
+```python
+instance.calculate_ratios(link)
+```
+
+To get a dataframe summarizing the 10-k elements run with an optional flag
+```python
+instance.summarize_10k(link, flag)
+```
+
 ## Details
 This project is a pure python project using modern tooling. It uses a `Makefile` as a command registry, with the following commands:
 - `make`: list available commands

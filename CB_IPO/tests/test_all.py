@@ -1,4 +1,5 @@
 from CB_IPO import scrape
+import pytest as pt
 from pytest import mark
 import pandas as pd
 import time
@@ -18,7 +19,98 @@ r1_dict = {'D/E': 1.0560073397556196, 'ROE': 0.3270778597939864, 'Working Capita
 r2_dict = {'D/E': 1.3427616121453099, 'ROE': 0.2837391236993623, 'Working Capital': 1.3989126104380023, 'Quick': 1.1866138595298914, 'TD/TA': 0.2117966012034649, 'ROA': 0.12111243360003526}
 
 r3_dict = {'D/E': 1.4396906411124422, 'ROE': 0.233594604447685, 'Working Capital': 0.9908963836421634, 'Quick': 0.7671947242034336, 'TD/TA': 0.14356434586771125, 'ROA': 0.09574763312662106}
-# Forms scraper integration test
+
+f_dict = {
+    'Total Assets': 197205.0,
+    'Total Liabilities': 101288.0,
+    'Total Equity': 95916.0,
+    'Current Assets': 51259.0,
+    'Current Liabilities': 42138.0,
+    'Net Income': 31372.0,
+    'Long Term Debt': 32884.0,
+    'Current Debt': 2945.0,
+    'Inventory': 8981.0,
+    'Registrant': 'PFIZER INC',
+}
+
+f_dict2 = {
+    'Total Assets': 187378.0,
+    'Total Liabilities': 110574,
+    'Total Equity': 76804.0,
+    'Current Assets': 55294.0,
+    'Current Liabilities': 55802,
+    'Net Income': 17941.0,
+    'Long Term Debt': 26888.0,
+    'Current Debt': 12.8,
+    'Inventory': 12483.0,
+    'Registrant': 'JOHNSON & JOHNSON',
+}
+
+
+@mark.parametrize("input, output", [((pfizer_cik, entries_ret), (['pfe-20221231.htm', 'pfe-20211231.htm', 'pfe-20201231.htm', 'pfe-12312019x10kshell.htm'], 'PFIZER INC  (PFE) '))])
+def test_refs(input, output):
+    assert tester.get_refs(input[0], input[1])[0] == output[0]
+    assert tester.get_refs(input[0], input[1])[1] == output[1]
+
+
+def test_dfErr():
+    with pt.raises(ValueError, match='Cannot find more than 100 entires per page'):
+        tester.generate_df(200, 2)
+
+
+def test_scrapeErr():
+    with pt.raises(ValueError, match='Cannot find more than 100 entires per page'):
+        tester.edgar_scrape(109)
+
+
+@mark.parametrize(
+    "input, link, output",
+    [
+        ('non_existant', link3, pd.DataFrame()),
+    ],
+)
+def test_unk_summary(input, link, output):
+    result = tester.summarize_10k(link, flag=input)
+    assert output.equals(result)
+
+
+@mark.parametrize(
+    "output, link",
+    [
+        (dict((key, f_dict[key]) for key in ('Total Assets', 'Total Liabilities', 'Total Equity')), test_file_link),
+        (dict((key, f_dict2[key]) for key in ('Total Assets', 'Total Liabilities', 'Total Equity')), link3),
+    ],
+)
+def test_totals_summary(link, output):
+    expected = pd.DataFrame(output.items(), columns=['Account', 'Amount'])
+    result = tester.summarize_10k(link, flag='totals')
+    assert expected.equals(result)
+
+
+@mark.parametrize(
+    "output, link",
+    [
+        (dict((key, f_dict[key]) for key in ('Current Assets', 'Current Liabilities', 'Current Debt')), test_file_link),
+        (dict((key, f_dict2[key]) for key in ('Current Assets', 'Current Liabilities', 'Current Debt')), link3),
+    ],
+)
+def test_current_summary(link, output):
+    expected = pd.DataFrame(output.items(), columns=['Account', 'Amount'])
+    result = tester.summarize_10k(link, flag='current')
+    assert expected.equals(result)
+
+
+@mark.parametrize(
+    "output, link",
+    [
+        (dict((key, f_dict[key]) for key in ('Long Term Debt', 'Current Debt')), test_file_link),
+        (dict((key, f_dict2[key]) for key in ('Long Term Debt', 'Current Debt')), link3),
+    ],
+)
+def test_debt_summary(link, output):
+    expected = pd.DataFrame(output.items(), columns=['Account', 'Amount'])
+    result = tester.summarize_10k(link, flag='debt')
+    assert expected.equals(result)
 
 
 @mark.parametrize(
@@ -317,12 +409,6 @@ def test_create_links(input, output):
     driver.quit()
 
 
-@mark.parametrize("input, output", [((pfizer_cik, entries_ret), (['pfe-20221231.htm', 'pfe-20211231.htm', 'pfe-20201231.htm', 'pfe-12312019x10kshell.htm'], 'PFIZER INC  (PFE) '))])
-def test_refs(input, output):
-    assert tester.get_refs(input[0], input[1])[0] == output[0]
-    assert tester.get_refs(input[0], input[1])[1] == output[1]
-
-
 @mark.parametrize("input, output", [((pfizer_cik, entries_ret), ['000007800323000024', '000007800322000027', '000007800321000038', '000007800320000014'])])
 def test_anums(input, output):
     assert tester.get_anums(input[0], input[1]) == output
@@ -369,6 +455,7 @@ def test_add_forms(input, output):
     assert out[1] == output
 
 
+# Forms scraper integration test
 @mark.parametrize("input,d1,d2", [(('20-F', 'S-1', 'S-1/A'), '2023-05-02', '2023-05-03')])
 def test_add_forms_EDGAR(input, d1, d2):
     tester.reset_url()

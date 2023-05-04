@@ -381,7 +381,7 @@ class scrape:
 
         Args:
             link (str): link to an xbrl for a 10-K filing
-            flag (str): str indicating summary type, 'raw', 'leverage', 'liquidity', 'profitability'
+            flag (str): str indicating summary type, 'raw', 'liquidity', 'profitability', etc
 
         Returns:
             pandas.DataFrame: A dataframe of the companies scraped and the dates they filed
@@ -417,5 +417,28 @@ class scrape:
             data = [['Quick', quick], ['Working Capital', wcap]]
             liq_df = pd.DataFrame(data, columns=['Ratio', 'Value'])
             return liq_df
+
+        elif flag == 'totals':
+            TA = finances['Total Assets']
+            TL = finances['Total Liabilities']
+            TE = finances['Total Equity']
+            data = [['Total Assets', TA], ['Total Liabilities', TL], ['Total Equity', TE]]
+            total_df = pd.DataFrame(data, columns=['Account', 'Amount'])
+            return total_df
+
+        elif flag == 'current':
+            CA = finances['Current Assets']
+            CL = finances['Current Liabilities']
+            CD = finances['Current Debt']
+            data = [['Current Assets', CA], ['Current Liabilities', CL], ['Current Debt', CD]]
+            curr_df = pd.DataFrame(data, columns=['Account', 'Amount'])
+            return curr_df
+
+        elif flag == 'debt':
+            LtD = finances['Long Term Debt']
+            CD = finances['Current Debt']
+            data = [['Long Term Debt', LtD], ['Current Debt', CD]]
+            debt_df = pd.DataFrame(data, columns=['Account', 'Amount'])
+            return debt_df
 
         return pd.DataFrame()
