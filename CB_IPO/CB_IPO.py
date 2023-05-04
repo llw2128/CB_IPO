@@ -1,5 +1,6 @@
 import pandas as pd
 import time
+import math
 from bs4 import BeautifulSoup as bs
 from selenium import webdriver
 
@@ -36,6 +37,7 @@ class scrape:
             self.url_info += pstr
         else:
             self.url_info = self.url_info[:i] + pstr
+
         return self.url_info
 
     def reset_url(self):
@@ -61,6 +63,7 @@ class scrape:
         """
         dates = 'dateRange=custom&category=custom&startdt={}&enddt={}&'.format(start_date, end_date)
         self.url_info = "https://www.sec.gov/edgar/search/#/{}filter_forms=S-1".format(dates)
+
         return self.url_info
 
     def edgar_scrape(self, num):
@@ -172,7 +175,7 @@ class scrape:
 
     def get_anums(self, cik, num):
         """
-        scrapes accession numbers from a page when given a cik
+        Scrapes accession numbers from a page when given a cik
 
         Args:
             cik (int): The cik id for a company
@@ -237,6 +240,7 @@ class scrape:
                 comp_name = item.text
                 i += 1
         driver.quit()
+
         return refs, comp_name
 
     def create_links(self, cik, num):
@@ -257,24 +261,161 @@ class scrape:
             a = anum_list[i]
             r = reflist[i]
             link_list.append('https://www.sec.gov/ix?doc=/Archives/edgar/data/{}/{}/{}'.format(cik, a, r))
+
         return link_list, c_name
 
     def scrape_xbrl(self, link):
         """
-        Finds the total assets, liabilities, and net income in a filing
+        Finds the account value for elements like total assets, liabilities, and net income in a filing
+
         Args:
             link (str): link to an xbrl for a 10-K filing
 
         Returns:
-            tuple: A tuple of the balance sheet's total assets, liabilities, and income statement's net income
+            dict: A dictionary of financial statement elements such as total assets, liabilities, and net income
+
+        Raises:
+            Exception: If the scraped Assets, Liabilities, and Equity fail the Accounting Equation
         """
+        Financials = {}
+
         driver = webdriver.Chrome('chromedriver')
         driver.get(link)
         time.sleep(10)
         page = driver.page_source
         soup = bs(page, "html.parser")
-        TA = soup.find(attrs={'name': "us-gaap:Assets"}).text
-        TL = soup.find(attrs={'name': "us-gaap:Liabilities"}).text
-        NI = soup.find(attrs={'name': "us-gaap:ProfitLoss"}).text
+        registrant = soup.find(attrs={'name': "dei:EntityRegistrantName"}).text
+        TA_s = soup.find(attrs={'name': "us-gaap:Assets"}).text
+        TL_s = soup.find(attrs={'name': "us-gaap:Liabilities"}).text
+        NI_s = soup.find(attrs={'name': "us-gaap:NetIncomeLoss"}).text
+        TE_s = soup.find(attrs={'name': "us-gaap:StockholdersEquityIncludingPortionAttributableToNoncontrollingInterest"}).text
+        CA_s = soup.find(attrs={'name': "us-gaap:AssetsCurrent"}).text
+        CL_s = soup.find(attrs={'name': "us-gaap:LiabilitiesCurrent"}).text
+        LongTerm_Debt_s = soup.find(attrs={'name': "us-gaap:LongTermDebtNoncurrent"}).text
+        Current_Debt_s = soup.find(attrs={'name': "us-gaap:DebtCurrent"}).text
+        Inventory_s = soup.find(attrs={'name': "us-gaap:InventoryNet"}).text
+
+        if '(' in TE_s and ')' in TE_s:
+            TE_s = TE_s.replace('(', '').replace(')', '')
+            TE_s = TE_s.insert(0, '-')
+
+        if '(' in NI_s and ')' in NI_s:
+            NI_s = NI_s.replace('(', '').replace(')', '')
+            NI_s = NI_s.insert(0, '-')
+
+        Financials['Total Assets'] = float(TA_s.replace(',', ''))
+        Financials['Total Liabilities'] = float(TL_s.replace(',', ''))
+        Financials['Total Equity'] = float(TE_s.replace(',', ''))
+
+        Financials['Current Assets'] = float(CA_s.replace(',', ''))
+        Financials['Current Liabilities'] = int(CL_s.replace(',', ''))
+
+        Financials['Net Income'] = float(NI_s.replace(',', ''))
+
+        Financials['Long Term Debt'] = float(LongTerm_Debt_s.replace(',', ''))
+        Financials['Current Debt'] = float(Current_Debt_s.replace(',', ''))
+
+        Financials['Inventory'] = float(Inventory_s.replace(',', ''))
+
+        Financials['Registrant'] = registrant
+        if not math.isclose(Financials['Total Assets'] - Financials['Total Liabilities'], Financials['Total Equity'], abs_tol=1):
+            driver.quit()
+            raise Exception("Total Assets and Liabilities not consistent with equity")
+
         driver.quit()
-        return (TA, TL, NI)
+
+        return Financials
+
+    def calculate_ratios(self, financials):
+        """
+        Calculates financial ratios relevant to balance sheet and income statements
+
+        Args:
+            financials (dict): a dictionary containg Asset and Liability information, as formatted by scrape_xrbl()
+
+        Returns:
+            dict: A dictionary of financial ratios relating to profitability, liquidity, and leverage
+
+        Raises:
+            ValueError: If `financials` is improperly formated and doesn't contain the requisite values
+        """
+        ratios = {}
+        info = financials
+
+        TA, TL, NI, TE, CA, CL, LtD, StD, Ivt = (
+            info['Total Assets'],
+            info['Total Liabilities'],
+            info['Net Income'],
+            info['Total Equity'],
+            info['Current Assets'],
+            info['Current Liabilities'],
+            info['Long Term Debt'],
+            info['Current Debt'],
+            info['Inventory'],
+        )
+
+        values = (TA, TL, NI, TE, CA, CL, LtD, StD, Ivt)
+
+        for v in values:
+            if not isinstance(v, float) and not isinstance(v, int):
+                print(type(v))
+                raise ValueError("Improper Formatting of finanical values")
+
+        if TE != 0:
+            ratios['D/E'] = TL * 1.0 / TE
+            ratios['ROE'] = NI * 1.0 / TE
+
+        if CL != 0:
+            ratios['Working Capital'] = CA * 1.0 / CL
+            ratios['Quick'] = (CA - Ivt) * 1.0 / CL
+
+        if TA != 0:
+            ratios['TD/TA'] = (LtD + StD) * 1.0 / TA
+            ratios['ROA'] = (NI * 1.0) / TA
+
+        return ratios
+
+    def summarize_10k(self, link, flag='raw'):
+        """
+        Creates dataframe that summarize information scraped from the 10-K filing
+
+        Args:
+            link (str): link to an xbrl for a 10-K filing
+            flag (str): str indicating summary type, 'raw', 'leverage', 'liquidity', 'profitability'
+
+        Returns:
+            pandas.DataFrame: A dataframe of the companies scraped and the dates they filed
+        """
+        finances = self.scrape_xbrl(link)
+        ratios = self.calculate_ratios(finances)
+
+        if flag == 'raw':
+            raw_df = pd.DataFrame(finances.items(), columns=['Account', 'Amount'])
+            return raw_df
+
+        elif flag == 'ratios':
+            ratio_df = pd.DataFrame(ratios.items(), columns=['Ratio', 'Value'])
+            return ratio_df
+
+        elif flag == 'leverage':
+            d2e = ratios['D/E']
+            tdta = ratios['TD/TA']
+            data = [['D/E', d2e], ['TD/TA', tdta]]
+            lev_df = pd.DataFrame(data, columns=['Ratio', 'Value'])
+            return lev_df
+
+        elif flag == 'profitability':
+            roa = ratios['ROA']
+            roe = ratios['ROE']
+            data = [['ROE', roe], ['ROA', roa]]
+            profit_df = pd.DataFrame(data, columns=['Ratio', 'Value'])
+            return profit_df
+
+        elif flag == 'liquidity':
+            quick = ratios['Quick']
+            wcap = ratios['Working Capital']
+            data = [['Quick', quick], ['Working Capital', wcap]]
+            liq_df = pd.DataFrame(data, columns=['Ratio', 'Value'])
+            return liq_df
+
+        return pd.DataFrame()
