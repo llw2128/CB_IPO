@@ -41,3 +41,17 @@ To scrape a 10-K link for assets, liabilities, and Net Income run
 ::
     
     instance.scrape_xbrl(link)
+
+To quickly calculate the financial ratios for a dictionary of elements run
+::
+    
+    instance.calculate_ratios(balance_sheet_dict)
+
+To generate a dataframe summarizing the info in a 10-K run
+::
+    
+    instance.summarize_10k(link, flag)
+    
+``flag`` can be a string that is set to: 
+``'raw'``, ``'ratios'``, ``'debt'``, ``'liquidity'``, 
+``'current'``, ``'total'``, ``'leverage'``, or ``'profitability'``
