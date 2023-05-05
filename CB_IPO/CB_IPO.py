@@ -381,7 +381,7 @@ class scrape:
 
         Args:
             link (str): link to an xbrl for a 10-K filing
-            flag (str): str indicating summary type, 'raw', 'liquidity', 'profitability', etc
+            flag (str): str indicating summary type, 'raw', 'liquidity', 'debt', etc.
 
         Returns:
             pandas.DataFrame: A dataframe of the companies scraped and the dates they filed
