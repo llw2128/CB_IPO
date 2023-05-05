@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Welcome to CB_IPO’s documentation! &mdash; CB_IPO 0.1.0 documentation</title>
+  <title>Welcome to CB_IPO’s documentation! &mdash; CB_IPO 0.2.0 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
@@ -12,9 +12,8 @@
   <![endif]-->
   
         <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
-        <script src="_static/jquery.js"></script>
-        <script src="_static/underscore.js"></script>
         <script src="_static/doctools.js"></script>
+        <script src="_static/sphinx_highlight.js"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
@@ -74,7 +73,13 @@
            <div itemprop="articleBody">
              
   <section id="welcome-to-cb-ipo-s-documentation">
-<h1>Welcome to CB_IPO’s documentation!<a class="headerlink" href="#welcome-to-cb-ipo-s-documentation" title="Permalink to this headline">¶</a></h1>
+<h1>Welcome to CB_IPO’s documentation!<a class="headerlink" href="#welcome-to-cb-ipo-s-documentation" title="Permalink to this heading">¶</a></h1>
+<p>This is a library designed for quick webscraping in finding information on SEC filings with a focus on new IPOs and annual reports.</p>
+<a class="reference external image-reference" href="https://github.com/llw2128/CB_IPO/actions?query=workflow%3A%22Build+Status%22"><img alt="https://github.com/llw2128/CB_IPO/workflows/Build%20Status/badge.svg?branch=main" src="https://github.com/llw2128/CB_IPO/workflows/Build%20Status/badge.svg?branch=main" /></a>
+<a class="reference external image-reference" href="https://codecov.io/gh/llw2128/CB_IPO"><img alt="https://codecov.io/gh/llw2128/CB_IPO/branch/main/graph/badge.svg" src="https://codecov.io/gh/llw2128/CB_IPO/branch/main/graph/badge.svg" /></a>
+<a class="reference external image-reference" href="https://opensource.org/licenses/Apache-2.0"><img alt="https://img.shields.io/badge/License-Apache_2.0-green.svg" src="https://img.shields.io/badge/License-Apache_2.0-green.svg" /></a>
+<a class="reference external image-reference" href="https://img.shields.io/github/issues/llw2128/CB_IPO"><img alt="https://img.shields.io/github/issues/llw2128/CB_IPO" src="https://img.shields.io/github/issues/llw2128/CB_IPO" /></a>
+<a class="reference external image-reference" href="https://pypi.org/project/CB-IPO/"><img alt="https://img.shields.io/pypi/v/CB_IPO" src="https://img.shields.io/pypi/v/CB_IPO" /></a>
 <div class="toctree-wrapper compound">
 <p class="caption" role="heading"><span class="caption-text">Quick Start:</span></p>
 <ul>
@@ -84,6 +89,51 @@
 <li class="toctree-l1"><a class="reference internal" href="examples.html">Example Uses</a></li>
 </ul>
 </div>
+<section id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this heading">¶</a></h2>
+<p>Researching information on trends for companies can be incredibly tedious, this library will automate part of the proccess making DCF building and IPO research easier.
+CB_IPO is a library that will fetch information on recent and historical IPOs by scraping the SEC EDGAR database for S-1 filings.
+With these links, the library also has a function for using a 10-k link and returning a dictionary or dataframe of info such as assets, liabilities, and income.</p>
+</section>
+<section id="example">
+<h2>Example<a class="headerlink" href="#example" title="Permalink to this heading">¶</a></h2>
+<p>Suppose I want to find companies that have filed either an S-1, 10-K or 10-Q between January 2021 and March 2023</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sc</span> <span class="o">=</span> <span class="n">scrape</span><span class="p">()</span>
+<span class="n">sc</span><span class="o">.</span><span class="n">set_search_date</span><span class="p">(</span><span class="s2">&quot;2021-01-01&quot;</span><span class="p">,</span> <span class="s2">&quot;2023-03-31&quot;</span><span class="p">)</span>
+<span class="n">sc</span><span class="o">.</span><span class="n">add_forms</span><span class="p">([</span><span class="s1">&#39;S-1&#39;</span><span class="p">,</span><span class="s1">&#39;10-K&#39;</span><span class="p">,</span> <span class="s1">&#39;10-Q&#39;</span><span class="p">])</span>
+<span class="n">dataframe</span> <span class="o">=</span> <span class="n">sc</span><span class="o">.</span><span class="n">generate_df</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Then this pandas.DataFrame is returned</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>                                                <span class="n">names</span> <span class="n">filing</span> <span class="n">date</span>
+<span class="mi">0</span>               <span class="n">Inhibikase</span> <span class="n">Therapeutics</span><span class="p">,</span> <span class="n">Inc</span><span class="o">.</span>  <span class="p">(</span><span class="n">IKT</span><span class="p">)</span>   <span class="mi">2023</span><span class="o">-</span><span class="mi">03</span><span class="o">-</span><span class="mi">31</span>
+<span class="mi">1</span>                       <span class="n">AMERINST</span> <span class="n">INSURANCE</span> <span class="n">GROUP</span> <span class="n">LTD</span>   <span class="mi">2023</span><span class="o">-</span><span class="mi">03</span><span class="o">-</span><span class="mi">31</span>
+<span class="mi">2</span>                      <span class="n">SLM</span> <span class="n">Student</span> <span class="n">Loan</span> <span class="n">Trust</span> <span class="mi">2013</span><span class="o">-</span><span class="mi">5</span>   <span class="mi">2023</span><span class="o">-</span><span class="mi">03</span><span class="o">-</span><span class="mi">31</span>
+<span class="mi">3</span>   <span class="n">Games</span> <span class="o">&amp;</span> <span class="n">Esports</span> <span class="n">Experience</span> <span class="n">Acquisition</span> <span class="n">Corp</span><span class="o">.</span>  <span class="o">...</span>  <span class="mi">2023</span><span class="o">-</span><span class="mi">03</span><span class="o">-</span><span class="mi">31</span>
+<span class="mi">4</span>   <span class="n">Bilander</span> <span class="n">Acquisition</span> <span class="n">Corp</span><span class="o">.</span>  <span class="p">(</span><span class="n">TWCB</span><span class="p">,</span> <span class="n">TWCBU</span><span class="p">,</span> <span class="n">TWCBW</span><span class="p">)</span>   <span class="mi">2023</span><span class="o">-</span><span class="mi">03</span><span class="o">-</span><span class="mi">31</span>
+<span class="mi">5</span>                                <span class="n">VirTra</span><span class="p">,</span> <span class="n">Inc</span>  <span class="p">(</span><span class="n">VTSI</span><span class="p">)</span>   <span class="mi">2023</span><span class="o">-</span><span class="mi">03</span><span class="o">-</span><span class="mi">31</span>
+<span class="mi">6</span>             <span class="n">Actinium</span> <span class="n">Pharmaceuticals</span><span class="p">,</span> <span class="n">Inc</span><span class="o">.</span>  <span class="p">(</span><span class="n">ATNM</span><span class="p">)</span>   <span class="mi">2023</span><span class="o">-</span><span class="mi">03</span><span class="o">-</span><span class="mi">31</span>
+<span class="mi">7</span>                              <span class="n">Genprex</span><span class="p">,</span> <span class="n">Inc</span><span class="o">.</span>  <span class="p">(</span><span class="n">GNPX</span><span class="p">)</span>   <span class="mi">2023</span><span class="o">-</span><span class="mi">03</span><span class="o">-</span><span class="mi">31</span>
+<span class="mi">8</span>                           <span class="n">Mega</span> <span class="n">Matrix</span> <span class="n">Corp</span><span class="o">.</span>  <span class="p">(</span><span class="n">MPU</span><span class="p">)</span>   <span class="mi">2023</span><span class="o">-</span><span class="mi">03</span><span class="o">-</span><span class="mi">31</span>
+<span class="mi">9</span>       <span class="n">Digital</span> <span class="n">Media</span> <span class="n">Solutions</span><span class="p">,</span> <span class="n">Inc</span><span class="o">.</span>  <span class="p">(</span><span class="n">DMS</span><span class="p">,</span> <span class="n">DMS</span><span class="o">-</span><span class="n">WT</span><span class="p">)</span>   <span class="mi">2023</span><span class="o">-</span><span class="mi">03</span><span class="o">-</span><span class="mi">31</span>
+</pre></div>
+</div>
+</section>
+<section id="details">
+<h2>Details<a class="headerlink" href="#details" title="Permalink to this heading">¶</a></h2>
+<p>This project is a pure python project using modern tooling. It uses a <code class="docutils literal notranslate"><span class="pre">Makefile</span></code> as a command registry, with the following commands:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">make</span></code>: list available commands.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">develop</span></code>: install and build this library and its dependencies using <code class="docutils literal notranslate"><span class="pre">pip</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">build</span></code>: build the library using <code class="docutils literal notranslate"><span class="pre">setuptools</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">lint</span></code>: perform static analysis of this library with <code class="docutils literal notranslate"><span class="pre">flake8</span></code> and <code class="docutils literal notranslate"><span class="pre">black</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">format</span></code>: autoformat this library using <code class="docutils literal notranslate"><span class="pre">black</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">annotate</span></code>: run type checking using <code class="docutils literal notranslate"><span class="pre">mypy</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">test</span></code>: run automated tests with <code class="docutils literal notranslate"><span class="pre">pytest</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">coverage</span></code>: run automated tests with <code class="docutils literal notranslate"><span class="pre">pytest</span></code> and collect coverage information</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">make</span> <span class="pre">dist</span></code>: package library for distribution</p></li>
+</ul>
+</section>
 </section>
 
 

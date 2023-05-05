@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Importing &mdash; CB_IPO 0.1.0 documentation</title>
+  <title>Importing &mdash; CB_IPO 0.2.0 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="_static/nbsphinx-code-cells.css" type="text/css" />
@@ -13,9 +13,8 @@
   <![endif]-->
   
         <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
-        <script src="_static/jquery.js"></script>
-        <script src="_static/underscore.js"></script>
         <script src="_static/doctools.js"></script>
+        <script src="_static/sphinx_highlight.js"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
         <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
         <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
@@ -58,7 +57,8 @@
 <li class="toctree-l2"><a class="reference internal" href="#Modifying-Form-Types">Modifying Form Types</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#Generating-Reference-Codes-and-Accession-Numbers">Generating Reference Codes and Accession Numbers</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#Finding-xbrl-Links-for-a-Company">Finding xbrl Links for a Company</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#Scraping-Link-for-Financial-Info">Scraping Link for Financial Info</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Scraping-Link-for-Financial-Info-and-Calculating-Ratio">Scraping Link for Financial Info and Calculating Ratio</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#10-K-Dataframe-Summary">10-K Dataframe Summary</a></li>
 </ul>
 </li>
 </ul>
@@ -89,9 +89,9 @@
            <div itemprop="articleBody">
              
   <section id="Importing">
-<h1>Importing<a class="headerlink" href="#Importing" title="Permalink to this headline">¶</a></h1>
+<h1>Importing<a class="headerlink" href="#Importing" title="Permalink to this heading">¶</a></h1>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">CB_IPO</span> <span class="kn">import</span> <span class="n">scrape</span>
@@ -100,9 +100,9 @@
 </div>
 </section>
 <section id="Initializing">
-<h1>Initializing<a class="headerlink" href="#Initializing" title="Permalink to this headline">¶</a></h1>
+<h1>Initializing<a class="headerlink" href="#Initializing" title="Permalink to this heading">¶</a></h1>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">scraper</span> <span class="o">=</span> <span class="n">scrape</span><span class="p">()</span>
@@ -111,14 +111,14 @@
 </div>
 </section>
 <section id="Scraping-for-recent-IPO-filings-(S-1)">
-<h1>Scraping for recent IPO filings (S-1)<a class="headerlink" href="#Scraping-for-recent-IPO-filings-(S-1)" title="Permalink to this headline">¶</a></h1>
+<h1>Scraping for recent IPO filings (S-1)<a class="headerlink" href="#Scraping-for-recent-IPO-filings-(S-1)" title="Permalink to this heading">¶</a></h1>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[21]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">company_names</span><span class="p">,</span> <span class="n">file_dates</span><span class="p">,</span> <span class="n">form_types</span> <span class="o">=</span> <span class="n">scraper</span><span class="o">.</span><span class="n">edgar_scrape</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">company_names</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">file_dates</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">file_dates</span><span class="p">[</span><span class="mi">1</span><span class="p">:])</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">form_types</span><span class="p">)</span>
 <br/></pre></div>
 </div>
@@ -128,104 +128,242 @@
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-[&#39;Allarity Therapeutics, Inc.  (ALLR) &#39;, &#39;Greenwave Technology Solutions, Inc.  (GWAV) &#39;, &#39;APPlife Digital Solutions Inc  (ALDS) &#39;, &#39;MAIA Biotechnology, Inc.  (MAIA) &#39;, &#39;Neolara Corp. &#39;]
-[&#39;2023-04-04&#39;, &#39;2023-04-04&#39;, &#39;2023-04-04&#39;, &#39;2023-04-04&#39;, &#39;2023-04-04&#39;]
-{&#39;S-1/A&#39;}
+[&#39;Intuitive Machines, Inc.  (LUNR, LUNRW) &#39;, &#39;Nuburu, Inc.  (BURU, BURU-WT) &#39;, &#39;SOLIGENIX, INC.  (SNGX) &#39;, &#39;NovaBay Pharmaceuticals, Inc.  (NBY) &#39;, &#39;Kodiak Gas Services, Inc. &#39;]
+[&#39;2023-03-31&#39;, &#39;2023-03-31&#39;, &#39;2023-03-31&#39;, &#39;2023-03-31&#39;]
+{&#39;S-1&#39;, &#39;S-1/A&#39;}
 </pre></div></div>
 </div>
 </section>
 <section id="Formatting-into-Dataframe">
-<h1>Formatting into Dataframe<a class="headerlink" href="#Formatting-into-Dataframe" title="Permalink to this headline">¶</a></h1>
+<h1>Formatting into Dataframe<a class="headerlink" href="#Formatting-into-Dataframe" title="Permalink to this heading">¶</a></h1>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">scraper</span><span class="o">.</span><span class="n">generate_df</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">scraper</span><span class="o">.</span><span class="n">generate_df</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
 </pre></div>
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt empty docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
+</pre></div>
 </div>
-<div class="output_area docutils container">
-<div class="highlight"><pre>
-                                           names filing date
-0           Allarity Therapeutics, Inc.  (ALLR)   2023-04-04
-1  Greenwave Technology Solutions, Inc.  (GWAV)   2023-04-04
-2         APPlife Digital Solutions Inc  (ALDS)   2023-04-04
-3              MAIA Biotechnology, Inc.  (MAIA)   2023-04-04
-4                                 Neolara Corp.   2023-04-04
-</pre></div></div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>names</th>
+      <th>filing date</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>1</th>
+      <td>Nuburu, Inc.  (BURU, BURU-WT)</td>
+      <td>2023-03-31</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>SOLIGENIX, INC.  (SNGX)</td>
+      <td>2023-03-31</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>NovaBay Pharmaceuticals, Inc.  (NBY)</td>
+      <td>2023-03-31</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Kodiak Gas Services, Inc.</td>
+      <td>2023-03-31</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>Artificial Intelligence Technology Solutions I...</td>
+      <td>2023-03-31</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
 </div>
 </section>
 <section id="Modifying-Search-Dates">
-<h1>Modifying Search Dates<a class="headerlink" href="#Modifying-Search-Dates" title="Permalink to this headline">¶</a></h1>
+<h1>Modifying Search Dates<a class="headerlink" href="#Modifying-Search-Dates" title="Permalink to this heading">¶</a></h1>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[20]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">scraper</span><span class="o">.</span><span class="n">set_search_date</span><span class="p">(</span><span class="s2">&quot;2021-01-01&quot;</span><span class="p">,</span> <span class="s2">&quot;2023-03-31&quot;</span><span class="p">)</span>
 
 <span class="n">company_names</span><span class="p">,</span> <span class="n">file_dates</span><span class="p">,</span> <span class="n">form_types</span> <span class="o">=</span> <span class="n">scraper</span><span class="o">.</span><span class="n">edgar_scrape</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
-<span class="nb">print</span> <span class="p">(</span><span class="n">file_dates</span><span class="p">)</span>
 
-<span class="n">df</span> <span class="o">=</span> <span class="n">scraper</span><span class="o">.</span><span class="n">generate_df</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">scraper</span><span class="o">.</span><span class="n">generate_df</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
 </pre></div>
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt empty docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
+</pre></div>
 </div>
-<div class="output_area docutils container">
-<div class="highlight"><pre>
-[&#39;2023-03-31&#39;, &#39;2023-03-31&#39;, &#39;2023-03-31&#39;, &#39;2023-03-31&#39;, &#39;2023-03-31&#39;]
-                                               names filing date
-0           Intuitive Machines, Inc.  (LUNR, LUNRW)   2023-03-31
-1                     Nuburu, Inc.  (BURU, BURU-WT)   2023-03-31
-2                           SOLIGENIX, INC.  (SNGX)   2023-03-31
-3              NovaBay Pharmaceuticals, Inc.  (NBY)   2023-03-31
-4  Artificial Intelligence Technology Solutions I...  2023-03-31
-</pre></div></div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>names</th>
+      <th>filing date</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>1</th>
+      <td>Nuburu, Inc.  (BURU, BURU-WT)</td>
+      <td>2023-03-31</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>SOLIGENIX, INC.  (SNGX)</td>
+      <td>2023-03-31</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>NovaBay Pharmaceuticals, Inc.  (NBY)</td>
+      <td>2023-03-31</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Kodiak Gas Services, Inc.</td>
+      <td>2023-03-31</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>Artificial Intelligence Technology Solutions I...</td>
+      <td>2023-03-31</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
 </div>
 </section>
 <section id="Modifying-Form-Types">
-<h1>Modifying Form Types<a class="headerlink" href="#Modifying-Form-Types" title="Permalink to this headline">¶</a></h1>
+<h1>Modifying Form Types<a class="headerlink" href="#Modifying-Form-Types" title="Permalink to this heading">¶</a></h1>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[19]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">scraper</span><span class="o">.</span><span class="n">reset_url</span><span class="p">()</span>
+<span class="n">scraper</span><span class="o">.</span><span class="n">set_search_date</span><span class="p">(</span><span class="s2">&quot;2021-12-30&quot;</span><span class="p">,</span> <span class="s2">&quot;2022-01-01&quot;</span><span class="p">)</span>
 <span class="n">scraper</span><span class="o">.</span><span class="n">add_forms</span><span class="p">([</span><span class="s1">&#39;10-K&#39;</span><span class="p">,</span> <span class="s1">&#39;10-Q&#39;</span><span class="p">])</span>
 
 <span class="n">company_names</span><span class="p">,</span> <span class="n">file_dates</span><span class="p">,</span> <span class="n">form_types</span> <span class="o">=</span> <span class="n">scraper</span><span class="o">.</span><span class="n">edgar_scrape</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
 <span class="nb">print</span> <span class="p">(</span><span class="n">form_types</span><span class="p">)</span>
 
-<span class="n">df</span> <span class="o">=</span> <span class="n">scraper</span><span class="o">.</span><span class="n">generate_df</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">scraper</span><span class="o">.</span><span class="n">generate_df</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
 </pre></div>
 </div>
 </div>
-<div class="nboutput nblast docutils container">
+<div class="nboutput docutils container">
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-{&#39;10-Q&#39;, &#39;10-K&#39;}
-                                               names filing date
-0  Compute Health Acquisition Corp.  (CPUH, CPUH-...  2023-04-04
-1                     DARDEN RESTAURANTS INC  (DRI)   2023-04-04
-2                               LINDSAY CORP  (LNN)   2023-04-04
-3                SMART Global Holdings, Inc.  (SGH)   2023-04-04
-4  ACCRETION ACQUISITION CORP.  (ENER, ENERR, ENE...  2023-04-04
+{&#39;10-Q&#39;, &#39;10-Q/A&#39;, &#39;10-K&#39;}
 </pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>names</th>
+      <th>filing date</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>1</th>
+      <td>GOLDEN GRAIN ENERGY</td>
+      <td>2021-12-30</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Financial Gravity Companies, Inc.  (FGCO)</td>
+      <td>2021-12-30</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>NEOGEN CORP  (NEOG)</td>
+      <td>2021-12-30</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>EASTON PHARMACEUTICALS INC.</td>
+      <td>2021-12-30</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>Nestbuilder.com Corp.  (NBLD)</td>
+      <td>2021-12-30</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
 </div>
 </section>
 <section id="Generating-Reference-Codes-and-Accession-Numbers">
-<h1>Generating Reference Codes and Accession Numbers<a class="headerlink" href="#Generating-Reference-Codes-and-Accession-Numbers" title="Permalink to this headline">¶</a></h1>
+<h1>Generating Reference Codes and Accession Numbers<a class="headerlink" href="#Generating-Reference-Codes-and-Accession-Numbers" title="Permalink to this heading">¶</a></h1>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[30]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#This is the cik that identifies Pfizer</span>
@@ -237,6 +375,7 @@
 <span class="c1">#This will yield all accession numbers tied to a cik</span>
 <span class="n">accession_numbers</span> <span class="o">=</span> <span class="n">scraper</span><span class="o">.</span><span class="n">get_anums</span><span class="p">(</span><span class="n">cik</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span>
 
+<span class="nb">print</span><span class="p">(</span><span class="n">accession_numbers</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">references</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
 </pre></div>
@@ -254,9 +393,9 @@ PFIZER INC  (PFE)
 </div>
 </section>
 <section id="Finding-xbrl-Links-for-a-Company">
-<h1>Finding xbrl Links for a Company<a class="headerlink" href="#Finding-xbrl-Links-for-a-Company" title="Permalink to this headline">¶</a></h1>
+<h1>Finding xbrl Links for a Company<a class="headerlink" href="#Finding-xbrl-Links-for-a-Company" title="Permalink to this heading">¶</a></h1>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[39]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">links</span><span class="p">,</span><span class="n">c_name</span> <span class="o">=</span> <span class="n">scraper</span><span class="o">.</span><span class="n">create_links</span><span class="p">(</span><span class="n">cik</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
@@ -271,25 +410,30 @@ PFIZER INC  (PFE)
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-[&#39;000007800323000024&#39;, &#39;000007800322000027&#39;, &#39;000007800321000038&#39;]
 https://www.sec.gov/ix?doc=/Archives/edgar/data/0000078003/000007800323000024/pfe-20221231.htm
 https://www.sec.gov/ix?doc=/Archives/edgar/data/0000078003/000007800322000027/pfe-20211231.htm
 https://www.sec.gov/ix?doc=/Archives/edgar/data/0000078003/000007800321000038/pfe-20201231.htm
 </pre></div></div>
 </div>
 </section>
-<section id="Scraping-Link-for-Financial-Info">
-<h1>Scraping Link for Financial Info<a class="headerlink" href="#Scraping-Link-for-Financial-Info" title="Permalink to this headline">¶</a></h1>
+<section id="Scraping-Link-for-Financial-Info-and-Calculating-Ratio">
+<h1>Scraping Link for Financial Info and Calculating Ratio<a class="headerlink" href="#Scraping-Link-for-Financial-Info-and-Calculating-Ratio" title="Permalink to this heading">¶</a></h1>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[40]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">link</span> <span class="ow">in</span> <span class="n">links</span><span class="p">:</span>
-    <span class="n">total_assets</span><span class="p">,</span> <span class="n">total_liabilities</span><span class="p">,</span> <span class="n">net_income</span> <span class="o">=</span> <span class="n">scraper</span><span class="o">.</span><span class="n">scrape_xbrl</span><span class="p">(</span><span class="n">link</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Assets: &#39;</span><span class="p">,</span><span class="n">total_assets</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Liabilities: &#39;</span><span class="p">,</span><span class="n">total_liabilities</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;NI: &#39;</span><span class="p">,</span><span class="n">net_income</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">()</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">link</span> <span class="o">=</span> <span class="n">links</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+<span class="n">Financials</span> <span class="o">=</span> <span class="n">scraper</span><span class="o">.</span><span class="n">scrape_xbrl</span><span class="p">(</span><span class="n">link</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">Financials</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="o">+</span><span class="n">f</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">+</span><span class="s1">&#39;: &#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">f</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span>
+<span class="nb">print</span><span class="p">()</span>
+
+<span class="n">ratios</span> <span class="o">=</span> <span class="n">scraper</span><span class="o">.</span><span class="n">calculate_ratios</span><span class="p">(</span><span class="n">Financials</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">ratios</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="o">+</span><span class="n">f</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">+</span><span class="s1">&#39;: &#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">f</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span>
+<span class="nb">print</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -298,19 +442,223 @@ https://www.sec.gov/ix?doc=/Archives/edgar/data/0000078003/000007800321000038/pf
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-Assets:  197,205
-Liabilities:  101,288
-NI:  31,407
+Total Assets: 197205.0
+Total Liabilities: 101288.0
+Total Equity: 95916.0
+Current Assets: 51259.0
+Current Liabilities: 42138
+Net Income: 31372.0
+Long Term Debt: 32884.0
+Current Debt: 2945.0
+Inventory: 8981.0
+Registrant: PFIZER INC
 
-Assets:  181,476
-Liabilities:  104,013
-NI:  22,025
-
-Assets:  154,229
-Liabilities:  90,756
-NI:  9,652
+D/E: 1.0560073397556196
+ROE: 0.3270778597939864
+Working Capital: 1.216455455883051
+Quick: 1.0033224168209218
+TD/TA: 0.181684034380467
+ROA: 0.1590831875459547
 
 </pre></div></div>
+</div>
+</section>
+<section id="10-K-Dataframe-Summary">
+<h1>10-K Dataframe Summary<a class="headerlink" href="#10-K-Dataframe-Summary" title="Permalink to this heading">¶</a></h1>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">raw_df</span> <span class="o">=</span> <span class="n">scraper</span><span class="o">.</span><span class="n">summarize_10k</span><span class="p">(</span><span class="n">link</span><span class="p">,</span> <span class="n">flag</span> <span class="o">=</span> <span class="s1">&#39;raw&#39;</span><span class="p">)</span>
+<span class="n">ratio_df</span> <span class="o">=</span> <span class="n">scraper</span><span class="o">.</span><span class="n">summarize_10k</span><span class="p">(</span><span class="n">link</span><span class="p">,</span> <span class="n">flag</span> <span class="o">=</span> <span class="s1">&#39;liquidity&#39;</span><span class="p">)</span>
+<span class="n">lev_df</span> <span class="o">=</span> <span class="n">scraper</span><span class="o">.</span><span class="n">summarize_10k</span><span class="p">(</span><span class="n">link</span><span class="p">,</span> <span class="n">flag</span> <span class="o">=</span> <span class="s1">&#39;leverage&#39;</span><span class="p">)</span>
+
+<span class="n">display</span><span class="p">(</span><span class="n">raw_df</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">()</span>
+<span class="n">display</span><span class="p">(</span><span class="n">ratio_df</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">()</span>
+<span class="n">display</span><span class="p">(</span><span class="n">lev_df</span><span class="p">)</span>
+<br/></pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Account</th>
+      <th>Amount</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Total Assets</td>
+      <td>197205.0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Total Liabilities</td>
+      <td>101288.0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Total Equity</td>
+      <td>95916.0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Current Assets</td>
+      <td>51259.0</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Current Liabilities</td>
+      <td>42138</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>Net Income</td>
+      <td>31372.0</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>Long Term Debt</td>
+      <td>32884.0</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>Current Debt</td>
+      <td>2945.0</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>Inventory</td>
+      <td>8981.0</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>Registrant</td>
+      <td>PFIZER INC</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Ratio</th>
+      <th>Value</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Quick</td>
+      <td>1.003322</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Working Capital</td>
+      <td>1.216455</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Ratio</th>
+      <th>Value</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>D/E</td>
+      <td>1.056007</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>TD/TA</td>
+      <td>0.181684</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
 </div>
 </section>
 

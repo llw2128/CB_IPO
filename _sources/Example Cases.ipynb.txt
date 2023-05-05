@@ -10,7 +10,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 11,
+   "execution_count": 1,
    "metadata": {},
    "outputs": [],
    "source": [
@@ -27,7 +27,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 12,
+   "execution_count": 2,
    "metadata": {},
    "outputs": [],
    "source": [
@@ -44,23 +44,23 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 16,
+   "execution_count": 21,
    "metadata": {},
    "outputs": [
     {
      "name": "stdout",
      "output_type": "stream",
      "text": [
-      "['Allarity Therapeutics, Inc.  (ALLR) ', 'Greenwave Technology Solutions, Inc.  (GWAV) ', 'APPlife Digital Solutions Inc  (ALDS) ', 'MAIA Biotechnology, Inc.  (MAIA) ', 'Neolara Corp. ']\n",
-      "['2023-04-04', '2023-04-04', '2023-04-04', '2023-04-04', '2023-04-04']\n",
-      "{'S-1/A'}\n"
+      "['Intuitive Machines, Inc.  (LUNR, LUNRW) ', 'Nuburu, Inc.  (BURU, BURU-WT) ', 'SOLIGENIX, INC.  (SNGX) ', 'NovaBay Pharmaceuticals, Inc.  (NBY) ', 'Kodiak Gas Services, Inc. ']\n",
+      "['2023-03-31', '2023-03-31', '2023-03-31', '2023-03-31']\n",
+      "{'S-1', 'S-1/A'}\n"
      ]
     }
    ],
    "source": [
     "company_names, file_dates, form_types = scraper.edgar_scrape(5)\n",
     "print(company_names)\n",
-    "print(file_dates)\n",
+    "print(file_dates[1:])\n",
     "print(form_types)\n"
    ]
   },
@@ -74,25 +74,81 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 17,
+   "execution_count": 15,
    "metadata": {},
    "outputs": [
     {
-     "name": "stdout",
-     "output_type": "stream",
-     "text": [
-      "                                           names filing date\n",
-      "0           Allarity Therapeutics, Inc.  (ALLR)   2023-04-04\n",
-      "1  Greenwave Technology Solutions, Inc.  (GWAV)   2023-04-04\n",
-      "2         APPlife Digital Solutions Inc  (ALDS)   2023-04-04\n",
-      "3              MAIA Biotechnology, Inc.  (MAIA)   2023-04-04\n",
-      "4                                 Neolara Corp.   2023-04-04\n"
-     ]
+     "data": {
+      "text/html": [
+       "<div>\n",
+       "<style scoped>\n",
+       "    .dataframe tbody tr th:only-of-type {\n",
+       "        vertical-align: middle;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe tbody tr th {\n",
+       "        vertical-align: top;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe thead th {\n",
+       "        text-align: right;\n",
+       "    }\n",
+       "</style>\n",
+       "<table border=\"1\" class=\"dataframe\">\n",
+       "  <thead>\n",
+       "    <tr style=\"text-align: right;\">\n",
+       "      <th></th>\n",
+       "      <th>names</th>\n",
+       "      <th>filing date</th>\n",
+       "    </tr>\n",
+       "  </thead>\n",
+       "  <tbody>\n",
+       "    <tr>\n",
+       "      <th>1</th>\n",
+       "      <td>Nuburu, Inc.  (BURU, BURU-WT)</td>\n",
+       "      <td>2023-03-31</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>2</th>\n",
+       "      <td>SOLIGENIX, INC.  (SNGX)</td>\n",
+       "      <td>2023-03-31</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>3</th>\n",
+       "      <td>NovaBay Pharmaceuticals, Inc.  (NBY)</td>\n",
+       "      <td>2023-03-31</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>4</th>\n",
+       "      <td>Kodiak Gas Services, Inc.</td>\n",
+       "      <td>2023-03-31</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>5</th>\n",
+       "      <td>Artificial Intelligence Technology Solutions I...</td>\n",
+       "      <td>2023-03-31</td>\n",
+       "    </tr>\n",
+       "  </tbody>\n",
+       "</table>\n",
+       "</div>"
+      ],
+      "text/plain": [
+       "                                               names filing date\n",
+       "1                     Nuburu, Inc.  (BURU, BURU-WT)   2023-03-31\n",
+       "2                           SOLIGENIX, INC.  (SNGX)   2023-03-31\n",
+       "3              NovaBay Pharmaceuticals, Inc.  (NBY)   2023-03-31\n",
+       "4                         Kodiak Gas Services, Inc.   2023-03-31\n",
+       "5  Artificial Intelligence Technology Solutions I...  2023-03-31"
+      ]
+     },
+     "execution_count": 15,
+     "metadata": {},
+     "output_type": "execute_result"
     }
    ],
    "source": [
-    "df = scraper.generate_df(5,1)\n",
-    "print(df)"
+    "df = scraper.generate_df(6,1)\n",
+    "df.iloc[1:]"
    ]
   },
   {
@@ -105,31 +161,85 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 20,
+   "execution_count": 14,
    "metadata": {},
    "outputs": [
     {
-     "name": "stdout",
-     "output_type": "stream",
-     "text": [
-      "['2023-03-31', '2023-03-31', '2023-03-31', '2023-03-31', '2023-03-31']\n",
-      "                                               names filing date\n",
-      "0           Intuitive Machines, Inc.  (LUNR, LUNRW)   2023-03-31\n",
-      "1                     Nuburu, Inc.  (BURU, BURU-WT)   2023-03-31\n",
-      "2                           SOLIGENIX, INC.  (SNGX)   2023-03-31\n",
-      "3              NovaBay Pharmaceuticals, Inc.  (NBY)   2023-03-31\n",
-      "4  Artificial Intelligence Technology Solutions I...  2023-03-31\n"
-     ]
+     "data": {
+      "text/html": [
+       "<div>\n",
+       "<style scoped>\n",
+       "    .dataframe tbody tr th:only-of-type {\n",
+       "        vertical-align: middle;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe tbody tr th {\n",
+       "        vertical-align: top;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe thead th {\n",
+       "        text-align: right;\n",
+       "    }\n",
+       "</style>\n",
+       "<table border=\"1\" class=\"dataframe\">\n",
+       "  <thead>\n",
+       "    <tr style=\"text-align: right;\">\n",
+       "      <th></th>\n",
+       "      <th>names</th>\n",
+       "      <th>filing date</th>\n",
+       "    </tr>\n",
+       "  </thead>\n",
+       "  <tbody>\n",
+       "    <tr>\n",
+       "      <th>1</th>\n",
+       "      <td>Nuburu, Inc.  (BURU, BURU-WT)</td>\n",
+       "      <td>2023-03-31</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>2</th>\n",
+       "      <td>SOLIGENIX, INC.  (SNGX)</td>\n",
+       "      <td>2023-03-31</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>3</th>\n",
+       "      <td>NovaBay Pharmaceuticals, Inc.  (NBY)</td>\n",
+       "      <td>2023-03-31</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>4</th>\n",
+       "      <td>Kodiak Gas Services, Inc.</td>\n",
+       "      <td>2023-03-31</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>5</th>\n",
+       "      <td>Artificial Intelligence Technology Solutions I...</td>\n",
+       "      <td>2023-03-31</td>\n",
+       "    </tr>\n",
+       "  </tbody>\n",
+       "</table>\n",
+       "</div>"
+      ],
+      "text/plain": [
+       "                                               names filing date\n",
+       "1                     Nuburu, Inc.  (BURU, BURU-WT)   2023-03-31\n",
+       "2                           SOLIGENIX, INC.  (SNGX)   2023-03-31\n",
+       "3              NovaBay Pharmaceuticals, Inc.  (NBY)   2023-03-31\n",
+       "4                         Kodiak Gas Services, Inc.   2023-03-31\n",
+       "5  Artificial Intelligence Technology Solutions I...  2023-03-31"
+      ]
+     },
+     "execution_count": 14,
+     "metadata": {},
+     "output_type": "execute_result"
     }
    ],
    "source": [
     "scraper.set_search_date(\"2021-01-01\", \"2023-03-31\")\n",
     "\n",
     "company_names, file_dates, form_types = scraper.edgar_scrape(5)\n",
-    "print (file_dates)\n",
     "\n",
-    "df = scraper.generate_df(5,1)\n",
-    "print(df)"
+    "df = scraper.generate_df(6,1)\n",
+    "df.iloc[1:]"
    ]
   },
   {
@@ -142,32 +252,95 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 19,
+   "execution_count": 13,
    "metadata": {},
    "outputs": [
     {
      "name": "stdout",
      "output_type": "stream",
      "text": [
-      "{'10-Q', '10-K'}\n",
-      "                                               names filing date\n",
-      "0  Compute Health Acquisition Corp.  (CPUH, CPUH-...  2023-04-04\n",
-      "1                     DARDEN RESTAURANTS INC  (DRI)   2023-04-04\n",
-      "2                               LINDSAY CORP  (LNN)   2023-04-04\n",
-      "3                SMART Global Holdings, Inc.  (SGH)   2023-04-04\n",
-      "4  ACCRETION ACQUISITION CORP.  (ENER, ENERR, ENE...  2023-04-04\n"
+      "{'10-Q', '10-Q/A', '10-K'}\n"
      ]
+    },
+    {
+     "data": {
+      "text/html": [
+       "<div>\n",
+       "<style scoped>\n",
+       "    .dataframe tbody tr th:only-of-type {\n",
+       "        vertical-align: middle;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe tbody tr th {\n",
+       "        vertical-align: top;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe thead th {\n",
+       "        text-align: right;\n",
+       "    }\n",
+       "</style>\n",
+       "<table border=\"1\" class=\"dataframe\">\n",
+       "  <thead>\n",
+       "    <tr style=\"text-align: right;\">\n",
+       "      <th></th>\n",
+       "      <th>names</th>\n",
+       "      <th>filing date</th>\n",
+       "    </tr>\n",
+       "  </thead>\n",
+       "  <tbody>\n",
+       "    <tr>\n",
+       "      <th>1</th>\n",
+       "      <td>GOLDEN GRAIN ENERGY</td>\n",
+       "      <td>2021-12-30</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>2</th>\n",
+       "      <td>Financial Gravity Companies, Inc.  (FGCO)</td>\n",
+       "      <td>2021-12-30</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>3</th>\n",
+       "      <td>NEOGEN CORP  (NEOG)</td>\n",
+       "      <td>2021-12-30</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>4</th>\n",
+       "      <td>EASTON PHARMACEUTICALS INC.</td>\n",
+       "      <td>2021-12-30</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>5</th>\n",
+       "      <td>Nestbuilder.com Corp.  (NBLD)</td>\n",
+       "      <td>2021-12-30</td>\n",
+       "    </tr>\n",
+       "  </tbody>\n",
+       "</table>\n",
+       "</div>"
+      ],
+      "text/plain": [
+       "                                        names filing date\n",
+       "1                        GOLDEN GRAIN ENERGY   2021-12-30\n",
+       "2  Financial Gravity Companies, Inc.  (FGCO)   2021-12-30\n",
+       "3                        NEOGEN CORP  (NEOG)   2021-12-30\n",
+       "4                EASTON PHARMACEUTICALS INC.   2021-12-30\n",
+       "5              Nestbuilder.com Corp.  (NBLD)   2021-12-30"
+      ]
+     },
+     "execution_count": 13,
+     "metadata": {},
+     "output_type": "execute_result"
     }
    ],
    "source": [
     "scraper.reset_url()\n",
+    "scraper.set_search_date(\"2021-12-30\", \"2022-01-01\")\n",
     "scraper.add_forms(['10-K', '10-Q'])\n",
     "\n",
     "company_names, file_dates, form_types = scraper.edgar_scrape(5)\n",
     "print (form_types)\n",
     "\n",
-    "df = scraper.generate_df(5,1)\n",
-    "print(df)"
+    "df = scraper.generate_df(6,1)\n",
+    "df.iloc[1:]"
    ]
   },
   {
@@ -180,7 +353,7 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 30,
+   "execution_count": 4,
    "metadata": {},
    "outputs": [
     {
@@ -203,6 +376,7 @@
     "#This will yield all accession numbers tied to a cik\n",
     "accession_numbers = scraper.get_anums(cik,3)\n",
     "\n",
+    "print(accession_numbers)\n",
     "print(references)\n",
     "print(name)"
    ]
@@ -217,14 +391,13 @@
   },
   {
    "cell_type": "code",
-   "execution_count": 39,
+   "execution_count": 5,
    "metadata": {},
    "outputs": [
     {
      "name": "stdout",
      "output_type": "stream",
      "text": [
-      "['000007800323000024', '000007800322000027', '000007800321000038']\n",
       "https://www.sec.gov/ix?doc=/Archives/edgar/data/0000078003/000007800323000024/pfe-20221231.htm\n",
       "https://www.sec.gov/ix?doc=/Archives/edgar/data/0000078003/000007800322000027/pfe-20211231.htm\n",
       "https://www.sec.gov/ix?doc=/Archives/edgar/data/0000078003/000007800321000038/pfe-20201231.htm\n"
@@ -243,40 +416,287 @@
    "cell_type": "markdown",
    "metadata": {},
    "source": [
-    "### Scraping Link for Financial Info"
+    "### Scraping Link for Financial Info and Calculating Ratio"
    ]
   },
   {
    "cell_type": "code",
-   "execution_count": 40,
+   "execution_count": 10,
    "metadata": {},
    "outputs": [
     {
      "name": "stdout",
      "output_type": "stream",
      "text": [
-      "Assets:  197,205\n",
-      "Liabilities:  101,288\n",
-      "NI:  31,407\n",
+      "Total Assets: 197205.0\n",
+      "Total Liabilities: 101288.0\n",
+      "Total Equity: 95916.0\n",
+      "Current Assets: 51259.0\n",
+      "Current Liabilities: 42138\n",
+      "Net Income: 31372.0\n",
+      "Long Term Debt: 32884.0\n",
+      "Current Debt: 2945.0\n",
+      "Inventory: 8981.0\n",
+      "Registrant: PFIZER INC\n",
       "\n",
-      "Assets:  181,476\n",
-      "Liabilities:  104,013\n",
-      "NI:  22,025\n",
-      "\n",
-      "Assets:  154,229\n",
-      "Liabilities:  90,756\n",
-      "NI:  9,652\n",
+      "D/E: 1.0560073397556196\n",
+      "ROE: 0.3270778597939864\n",
+      "Working Capital: 1.216455455883051\n",
+      "Quick: 1.0033224168209218\n",
+      "TD/TA: 0.181684034380467\n",
+      "ROA: 0.1590831875459547\n",
       "\n"
      ]
     }
    ],
    "source": [
-    "for link in links:\n",
-    "    total_assets, total_liabilities, net_income = scraper.scrape_xbrl(link)\n",
-    "    print('Assets: ',total_assets)\n",
-    "    print('Liabilities: ',total_liabilities)\n",
-    "    print('NI: ',net_income) \n",
-    "    print()"
+    "link = links[0]\n",
+    "\n",
+    "Financials = scraper.scrape_xbrl(link)\n",
+    "for f in Financials.items():\n",
+    "    print(''+f[0]+': '+str(f[1]))\n",
+    "print()\n",
+    "\n",
+    "ratios = scraper.calculate_ratios(Financials)\n",
+    "\n",
+    "for f in ratios.items():\n",
+    "    print(''+f[0]+': '+str(f[1]))\n",
+    "print()"
+   ]
+  },
+  {
+   "attachments": {},
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "### 10-K Dataframe Summary"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 16,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/html": [
+       "<div>\n",
+       "<style scoped>\n",
+       "    .dataframe tbody tr th:only-of-type {\n",
+       "        vertical-align: middle;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe tbody tr th {\n",
+       "        vertical-align: top;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe thead th {\n",
+       "        text-align: right;\n",
+       "    }\n",
+       "</style>\n",
+       "<table border=\"1\" class=\"dataframe\">\n",
+       "  <thead>\n",
+       "    <tr style=\"text-align: right;\">\n",
+       "      <th></th>\n",
+       "      <th>Account</th>\n",
+       "      <th>Amount</th>\n",
+       "    </tr>\n",
+       "  </thead>\n",
+       "  <tbody>\n",
+       "    <tr>\n",
+       "      <th>0</th>\n",
+       "      <td>Total Assets</td>\n",
+       "      <td>197205.0</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>1</th>\n",
+       "      <td>Total Liabilities</td>\n",
+       "      <td>101288.0</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>2</th>\n",
+       "      <td>Total Equity</td>\n",
+       "      <td>95916.0</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>3</th>\n",
+       "      <td>Current Assets</td>\n",
+       "      <td>51259.0</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>4</th>\n",
+       "      <td>Current Liabilities</td>\n",
+       "      <td>42138</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>5</th>\n",
+       "      <td>Net Income</td>\n",
+       "      <td>31372.0</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>6</th>\n",
+       "      <td>Long Term Debt</td>\n",
+       "      <td>32884.0</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>7</th>\n",
+       "      <td>Current Debt</td>\n",
+       "      <td>2945.0</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>8</th>\n",
+       "      <td>Inventory</td>\n",
+       "      <td>8981.0</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>9</th>\n",
+       "      <td>Registrant</td>\n",
+       "      <td>PFIZER INC</td>\n",
+       "    </tr>\n",
+       "  </tbody>\n",
+       "</table>\n",
+       "</div>"
+      ],
+      "text/plain": [
+       "               Account      Amount\n",
+       "0         Total Assets    197205.0\n",
+       "1    Total Liabilities    101288.0\n",
+       "2         Total Equity     95916.0\n",
+       "3       Current Assets     51259.0\n",
+       "4  Current Liabilities       42138\n",
+       "5           Net Income     31372.0\n",
+       "6       Long Term Debt     32884.0\n",
+       "7         Current Debt      2945.0\n",
+       "8            Inventory      8981.0\n",
+       "9           Registrant  PFIZER INC"
+      ]
+     },
+     "metadata": {},
+     "output_type": "display_data"
+    },
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "\n"
+     ]
+    },
+    {
+     "data": {
+      "text/html": [
+       "<div>\n",
+       "<style scoped>\n",
+       "    .dataframe tbody tr th:only-of-type {\n",
+       "        vertical-align: middle;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe tbody tr th {\n",
+       "        vertical-align: top;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe thead th {\n",
+       "        text-align: right;\n",
+       "    }\n",
+       "</style>\n",
+       "<table border=\"1\" class=\"dataframe\">\n",
+       "  <thead>\n",
+       "    <tr style=\"text-align: right;\">\n",
+       "      <th></th>\n",
+       "      <th>Ratio</th>\n",
+       "      <th>Value</th>\n",
+       "    </tr>\n",
+       "  </thead>\n",
+       "  <tbody>\n",
+       "    <tr>\n",
+       "      <th>0</th>\n",
+       "      <td>Quick</td>\n",
+       "      <td>1.003322</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>1</th>\n",
+       "      <td>Working Capital</td>\n",
+       "      <td>1.216455</td>\n",
+       "    </tr>\n",
+       "  </tbody>\n",
+       "</table>\n",
+       "</div>"
+      ],
+      "text/plain": [
+       "             Ratio     Value\n",
+       "0            Quick  1.003322\n",
+       "1  Working Capital  1.216455"
+      ]
+     },
+     "metadata": {},
+     "output_type": "display_data"
+    },
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "\n"
+     ]
+    },
+    {
+     "data": {
+      "text/html": [
+       "<div>\n",
+       "<style scoped>\n",
+       "    .dataframe tbody tr th:only-of-type {\n",
+       "        vertical-align: middle;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe tbody tr th {\n",
+       "        vertical-align: top;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe thead th {\n",
+       "        text-align: right;\n",
+       "    }\n",
+       "</style>\n",
+       "<table border=\"1\" class=\"dataframe\">\n",
+       "  <thead>\n",
+       "    <tr style=\"text-align: right;\">\n",
+       "      <th></th>\n",
+       "      <th>Ratio</th>\n",
+       "      <th>Value</th>\n",
+       "    </tr>\n",
+       "  </thead>\n",
+       "  <tbody>\n",
+       "    <tr>\n",
+       "      <th>0</th>\n",
+       "      <td>D/E</td>\n",
+       "      <td>1.056007</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>1</th>\n",
+       "      <td>TD/TA</td>\n",
+       "      <td>0.181684</td>\n",
+       "    </tr>\n",
+       "  </tbody>\n",
+       "</table>\n",
+       "</div>"
+      ],
+      "text/plain": [
+       "   Ratio     Value\n",
+       "0    D/E  1.056007\n",
+       "1  TD/TA  0.181684"
+      ]
+     },
+     "metadata": {},
+     "output_type": "display_data"
+    }
+   ],
+   "source": [
+    "raw_df = scraper.summarize_10k(link, flag = 'raw')\n",
+    "ratio_df = scraper.summarize_10k(link, flag = 'liquidity')\n",
+    "lev_df = scraper.summarize_10k(link, flag = 'leverage')\n",
+    "\n",
+    "display(raw_df)\n",
+    "print()\n",
+    "display(ratio_df)\n",
+    "print()\n",
+    "display(lev_df)\n"
    ]
   }
  ],
