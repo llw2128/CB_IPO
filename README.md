@@ -66,14 +66,14 @@ To get a list of links to 10-K filings by a company given CIK
 instance.create_links(cik, number of files needed)
 ```
 
-To scrape a 10-K link for elements like assets, liabilities, and Net Income run
+To scrape a 10-K link for elements like assets, liabilities, and net income and format into a dictionary
 ```python
 instance.scrape_xbrl(link)
 ```
 
 To calculate financial ratios from a dicitonary of financial elements run
 ```python
-instance.calculate_ratios(link)
+instance.calculate_ratios(balance_sheet_dict)
 ```
 
 To get a dataframe summarizing the 10-k elements run with an optional flag

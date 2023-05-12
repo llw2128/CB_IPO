@@ -37,7 +37,7 @@ To get a list of links to 10-K filings by a company given CIK
     instance.create_links(cik, number of files needed)
 
 
-To scrape a 10-K link for assets, liabilities, and Net Income run
+To scrape a 10-K link for assets, liabilities, and net income and format into dictionary run
 ::
     
     instance.scrape_xbrl(link)

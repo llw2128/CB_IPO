@@ -45,6 +45,26 @@ f_dict2 = {
     'Inventory': 12483.0,
     'Registrant': 'JOHNSON & JOHNSON',
 }
+exception_link = 'https://www.sec.gov/ix?doc=/Archives/edgar/data/310158/000162828023005061/mrk-20221231.htm'
+
+
+@mark.parametrize("input", [exception_link])
+def test_except(input):
+    with pt.raises(Exception, match="Total Assets and Liabilities not consistent with equity"):
+        tester.scrape_xbrl(input)
+
+
+@mark.parametrize(
+    "input,output",
+    [
+        (5, "https://www.sec.gov/edgar/search/#/filter_forms=S-1&page=5"),
+        (4, "https://www.sec.gov/edgar/search/#/filter_forms=S-1&page=4"),
+    ],
+)
+def test_page_set_mult(input, output):
+    tester.reset_url()
+    tester.set_page(input)
+    assert tester.set_page(input) == output
 
 
 @mark.parametrize("input, output", [((pfizer_cik, entries_ret), (['pfe-20221231.htm', 'pfe-20211231.htm', 'pfe-20201231.htm', 'pfe-12312019x10kshell.htm'], 'PFIZER INC  (PFE) '))])
